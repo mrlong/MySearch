@@ -27,9 +27,11 @@ app.use(express.session({
   key: settings.db,
   cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
   store: new MongoStore({
-    db: settings.db
+    db: settings.db,
+    host: settings.host
   })
 }));
+
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
