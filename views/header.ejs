@@ -1,18 +1,48 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="外贸 软件 搜索 邮件 mail">
+    <meta name="author" content="mrlong.com@gmail.com">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/css/style.css' />
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="/js/pub.js"></script>
+    <link rel='stylesheet' href='/css/style.css' />
   </head>
   <script type="text/javascript">
     function myclick(){
       var username = <%- mrlong %>; 
       alert(username);
     }
+
+    $(function(){
+      $("li[class='active']").removeClass('active');
+      $("li a[href='<%-url%>']").parent().addClass('active');    
+    })
   </script>
 
 <body>
-<div class="centent">
+<div class="container">
+
+  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container"> 
+        
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/" style="margin-left: 0px;color:#0088CC;font-size:20px">Brand</a>
+      </div>
+        
+      <div class="collapse navbar-collapse navbar-ex9-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">首页</a></li>
+          <li><a href="/login">登录</a></li>
+          <li><a href="/vip">用户中心</a></li>
+        </ul>
+        <p class="navbar-text pull-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
+      </div>
+      
+    </div> 
+  </nav>
+
+<div class="main box">

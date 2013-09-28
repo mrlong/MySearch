@@ -1,9 +1,51 @@
 <%- include header %>
 
-	<%=mrlong%>
-    <h1><%= title %></h1>
-    <p onclick="click">Welcome to fffff <%= title %></p>
-    <input type="button" value="Hello world!" onclick="myclick()">
+<!-- 轮流播放 -->
+<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
 
+  <div class="carousel-inner">
+    <div class="active item">
+      <img src="/img/banner/1.jpg" alt="" >
+      <div class="carousel-caption">
+        <h4>First Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div>
 
+    <div class="item">
+      <img src="/img/banner/2.jpg" alt="">
+      <div class="carousel-caption">
+        <h4>First Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div> 
+
+    <div class="item">
+      <img src="/img/banner/3.jpg" alt="">
+      <div class="carousel-caption">
+        <h4>First Thumbnail label</h4>
+        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+
+<!-- 内容了 -->
+<div class="page-header">
+<h1>与从不同<small>与市上的系统有什么不同。</small><h1>
+</div>
+
+	
 <%- include footer %>

@@ -14,5 +14,9 @@ var opts = {
 }
 db = mongoose.createConnection(settings.host, settings.db, settings.dbport,opts);
 
+db.open(function(){
+
+});
+
 module.exports = db;
 

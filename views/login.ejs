@@ -1,0 +1,10 @@
+<%- include header %>
+
+<script type="text/javascript">
+  $(function(){
+    $("li[class='active']").removeClass('active');
+    $("li a[href='<%-url%>']").parent().addClass('active');    
+  })
+</script>
+
+<%- include footer %>

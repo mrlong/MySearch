@@ -1,7 +1,19 @@
 body {
-  padding: 50px;
+  padding-top: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #333333;
+  font-size: 14px;
+  line-height: 20px;
 }
 a {
   color: #00b7ff;
+}
+
+.container{
+  width: 950px;
+}
+
+.carousel-inner img{
+  width: 950px;
+  height: 500px;
 }
