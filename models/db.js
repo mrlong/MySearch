@@ -5,10 +5,14 @@
 //
 
 var settings = require('../settings'),
-    Db = require('mongodb').Db,
-    Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
+var mongoose = require('mongoose');
 
-    
-module.exports = new Db(settings.db, new Server(settings.host, Connection.DEFAULT_PORT, {}));
+var opts = { 
+  server: { auto_reconnect: false }, 
+  user: 'username', 
+  pass: 'mypassword' 
+}
+db = mongoose.createConnection(settings.host, settings.db, settings.dbport,opts);
+
+module.exports = db;
 

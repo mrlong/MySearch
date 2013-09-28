@@ -9,8 +9,8 @@
     "express": "3.3.8",
     "ejs": "*",
     "stylus": "*",
-    "mongodb": "*",
-    "connect-mongo": "*",
+    "mongoose":">=2.3.1",
+    "connect-mongo":"*",
     "connect-flash": "*"
   }
 }
