@@ -1,24 +1,42 @@
 // 
 // 用户
 // 
-// 
-
+var mongoose=require('mongoose');
 var db=require('./db');
-
-var UserSchema=new db.Schema({
-  qq : string,
-  name : string,
-  pw : string,
-  point : Number,
-  regdate: date
+var Schema=mongoose.Schema;
+var userSchema=new Schema({
+ 	mail   : {type:String},   //邮箱
+  name   : {type:String},   //用户名 
+  pw     : {type:String},   //密码 md5.base64
+  point  : {type:Number},   //积分
+  regdate: {type:date,default:Date.now()},    //注册日期
 });
+db.model('user',userSchema);
 
-var User = db.model('User',UserSchema);
 
-// user_qq char(50)  NOT NULL,     #QQ
-//   user_name char(50) NOT NULL,    #姓名
-//   user_pw char(100) NOT NULL,     #密码，是MD5码
-//   user_headimage blob,            #头像
-//   user_point int default 0,       #积分
-//   user_regdate datetime NOT NULL, #注册时间
-//   user_issoft bit default 0,      #=1表示这个用户是登录过软件的
+var User=db.model('user');
+exports.userSave=function(user,callback){
+    var newUser=new User();
+    newUser.mail=user.mail;
+    newUser.name=user.name;
+    newUser.pw = user.pw;
+    newUser.point = user.point;
+    newUser.regdate = user.regdate;
+
+    newUser.save(function(err){
+        if(err){
+         return callback(err);
+        }
+        callback(null);
+    })
+
+};
+
+exports.userFind=function(mail,callback){
+	User.findOne({mail:mail},function(err,doc){
+  	if(err){
+    	return callback(err,null);
+     }
+    callback(null,doc); // 用户名如果已经存在，将在调用函数内赋值err
+  })
+};
