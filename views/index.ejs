@@ -1,5 +1,17 @@
 <%- include header %>
 
+<% if (user==null) { %>
+  <div style="background-color:#D9EDF7" >
+    <div class="container" style="padding-top: 8px; padding-bottom: 8px;">  
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <a href="/login/new">免费注册</a> <strong>加入我们</strong>发现工作更简单。
+    </div>  
+  </div>
+<% } %>
+
+
+
+
 <!-- 轮流播放 -->
 <div id="myCarousel" class="carousel slide">
   <ol class="carousel-indicators">
