@@ -1,5 +1,5 @@
 
-var user = require('../model/user');
+var user = require('../models/user');
 
 
 //用户登录

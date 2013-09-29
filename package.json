@@ -9,6 +9,7 @@
     "express": "3.3.8",
     "ejs": "*",
     "stylus": "*",
+    "mongodb": "*",
     "mongoose":">=2.3.1",
     "connect-mongo":"*",
     "connect-flash": "*"

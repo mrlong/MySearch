@@ -1,15 +1,14 @@
 // 
 // 用户
 // 
-var mongoose=require('mongoose');
 var db=require('./db');
-var Schema=mongoose.Schema;
+var Schema=require('mongoose').Schema;
 var userSchema=new Schema({
  	mail   : {type:String},   //邮箱
   name   : {type:String},   //用户名 
   pw     : {type:String},   //密码 md5.base64
   point  : {type:Number},   //积分
-  regdate: {type:date,default:Date.now()},    //注册日期
+  regdate: {type:Date,default:Date.now()},    //注册日期
 });
 db.model('user',userSchema);
 

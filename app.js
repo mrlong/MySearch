@@ -43,13 +43,6 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-//500
-app.use(function(err, req, res, next){
-  console.error(err.stack);
-  //res.send(500, 'Something broke!');
-  res.status(404).send('path/to/404.png');
-});
-
 routes(app);
 
 http.createServer(app).listen(app.get('port'), function(){
