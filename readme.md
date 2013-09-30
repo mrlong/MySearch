@@ -34,6 +34,24 @@ browes -> routes -> controllers -> view  + models = html
 
  2.所有文件名都是小写包括目录名.
 
+ 
+ 3.控制器的书写规则
+   扩展为: cjs ， 注意只能支持二级目录结构.
 
+   module.exports = function(app){
+      this.route=[
+        {
+          url:  '',    //路由,如是二级目录则要写/xxx/xxx, 尽量定的路由与目录结构一样
+          auth: true,  //=true表示要认证, 可以是 function(req,res){}  
+          func: myfunc
+        }
+      ]
+
+      function myfunc(req,res){
+        ...
+      };
+
+    }
+  }  
 
                                     

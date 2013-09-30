@@ -16,6 +16,7 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
+app.set('controllers',__dirname + '/controllers');
 app.set('view engine', 'ejs');
 app.set('title', 'MySearch');
 app.use(express.favicon(__dirname + '/public/img/favicon.ico'));

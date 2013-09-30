@@ -2,10 +2,7 @@
 /*
  * GET home page.
  */
-
-var user=require('../controllers/user.cjs');
-var vip_home=require('../controllers/vip/home.cjs');
-
+var fs=require('fs');
 
 module.exports = function(app) {
 
@@ -18,26 +15,61 @@ module.exports = function(app) {
     } 
     else {
       var ejs = require('ejs')
-          ,fs = require('fs')
           ,str = fs.readFileSync(app.get("views") + '/error.ejs', 'utf8');
-      var ret = ejs.render(str,{content:"你没有登录，请登录！",url:"/login"});
+      var ret = ejs.render(str,{
+          content:"你没有登录，请登录！",
+          url:"/login",
+          title:app.get('title')
+      });
       return res.send(ret);
     }
   };
   
-  app.get('/', function (req, res) {
-    res.render('index', { title: 'Express',url:'/',mrlong:'33333377766',user:null });
-    return false;
+  //路由加载
+  fs.readdir(app.get("controllers"), function(err, files){
+    if(!err){
+      files.forEach(function(item) {  
+        var tmpPath = app.get("controllers") + '/' + item;
+        debugger;
+        if (fs.statSync(tmpPath).isFile()){
+          loadcontrollers(tmpPath);
+        } //isFile()  
+        //二级目录
+        else{
+          fs.readdir(tmpPath,function(err,files){
+            if(!err){
+              files.forEach(function(item) {
+                var tmpPath2 = tmpPath + '/' + item; 
+                if (fs.statSync(tmpPath2).isFile()){
+                  loadcontrollers(tmpPath2);
+                }
+              })
+            }
+          });
+        }//end 二级目录
+      });
+    }
   });
-
-  app.get('/login',user.login);
-
-  //用户中心
-  app.get('/vip',auths,vip_home.index);
+  //end 路由加载
 
   //错误
   app.use(function (req, res) {
     res.render("404");
   });
+
+  function loadcontrollers(filepath){
+    var a =  require(filepath);
+    new a(app).route.forEach(function(val){
+      if (val.auth && val.auth===true){
+        app.get(val.url,auths,val.func)
+      }
+      else if (val.auth){
+        app.get(val.url,val.auth,val.func) 
+      }
+      else{
+        app.get(val.url,val.func) 
+      }
+    });  
+  };
 
 };
