@@ -43,6 +43,7 @@ browes -> routes -> controllers -> view  + models = html
         {
           url:  '',    //路由,如是二级目录则要写/xxx/xxx, 尽量定的路由与目录结构一样
           auth: true,  //=true表示要认证, 可以是 function(req,res){}  
+          method: 'post',  //如没有method 表示使用get方法，现只支持post与get方法
           func: myfunc
         }
       ]

@@ -1,0 +1,128 @@
+<%- include header %>
+
+<script type="text/javascript">
+  $(function(){
+    $("form").validation();
+    //1.mail
+    // $("#mail").on('blur',function(){
+    //   $.post("/verifymail",{mail :$(this).val()},function(data){
+    //     var curobj = $("#mail")
+    //     curobj.parents(".form-group").removeClass('has-error has-success')
+    //     curobj.parents(".form-group").addClass(data.success==true?'has-success':'has-error');
+    //     curobj.parents(".form-group").find("#err").remove();
+    //     curobj.parent().after('<span class="help-block" id="err">' + data.msg +'</span>');
+    //   })
+    // })
+
+    //4.注册
+    $("button[type='submit']").on('click',function(event){
+      if($(this).hasClass('disabled')){return false}
+      // $("#name,#mail,#pw1,#pw2,#vercode").trigger('blur')  
+      $("form").submit();
+      if($(".has-error").length >0){
+        $("#error-text").text("填写信息不完整。")
+        return false
+      }
+      if($("#pw1").val() != $("#pw2").val()){
+        $("#error-text").text("登录密码与确认密码不一致。")
+        return false 
+      }
+
+    })
+
+    $("#reader").on('click',function(){
+      $("button[type='submit']")[this.checked?'removeClass':'addClass']('disabled')
+    }) 
+  })
+</script>
+
+<style type="text/css">
+  form{
+    padding-top: 20px;
+  }
+ 
+</style>
+<form class="form-horizontal"  action="/createuser" role="form">
+  <fieldset>
+  <legend class="pull-right">免费注册用户</legend>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="mail" class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="mail" placeholder="xxxx@qq.com" check-type="mail">
+        </div>
+        <div class="col-sm-offset-2 col-sm-10">
+          <span class="help-block" style="color: #000000;padding-top: 10px;">请填写真实的邮箱，在注册之前会将验证码发送到你的邮箱内.</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="name" check-type="required">
+        </div>
+        <span class="help-block"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="pw1" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="pw1" check-type="required" required-message="密码大于五位。">
+        </div>
+        <span class="help-block"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="pw2" class="col-sm-2 control-label">确认密码</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" id="pw2">
+        </div>
+        <span class="help-block"></span>
+      </div>  
+
+      <div class="form-group">
+        <label for="vercode" class="col-sm-2 control-label">验证码</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="vercode">
+          <button class="btn btn-link" type="button" data-toggle="tooltip" title="验证码会以邮件的方式发送到你的上面填写的邮箱内" data-placement="right" id="getvercode" >获取验证码</button>
+        </div>
+        <span class="help-block"></span>
+      </div>  
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="reader"> 我已经认真阅读并同意平台的《使用协议》。 
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary col-sm-4 disabled">注册</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <span id="error-text" style="color: #FF0000;"></span>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <div class="alert alert-info">
+        <h4>欢迎您使用<%=title%></h4>
+        <p>注册后账号可以用来登录外贸软件！</p>
+        <p>你的历史数据可以实时保存。</p>
+        <p>你的资料与及客户资料永不丢失，永不损坏。</p>
+      </div> 
+    </div>
+  </div>
+</fieldset>
+</form>
+
+<%- include footer %>

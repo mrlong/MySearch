@@ -8,7 +8,7 @@ module.exports = function(app){
 	];
 
 	function index(req,res){
-		res.render('index', {title:'Express',url:'/',mrlong:'33333377766',user:null});	
+		res.render('index', {url:'/',mrlong:'33333377766',user:null});	
 	}
 
 }

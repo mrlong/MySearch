@@ -11,6 +11,6 @@ module.exports = function(app){
 	];
 
 	function home(req,res){
-		res.render('vip/home.ejs', { title:app.get('title'),url:'/vip',mrlong:'33333377766',user:null });
+		res.render('vip/home.ejs', {url:'/vip',mrlong:'33333377766',user:null });
 	}
 }

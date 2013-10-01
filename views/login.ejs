@@ -4,6 +4,49 @@
   $(function(){
     
   })
+
+ 
 </script>
-<%=title%>
+
+<style type="text/css">
+  form{
+    padding-top: 20px;
+  }
+  #bigeye{
+    width: 600px; 
+    height: 250px;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+  }
+</style>
+<form role="form">
+  <fieldset>
+  <legend>登录</legend>
+  <div class="row">
+    <div class="col-md-8">
+      <img id='bigeye' src="/img/bigeye.png" class="img-rounded">
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <small class="pull-right"><a href="/fgtpwd">忘记密码</a></small>
+      </div>
+      
+     <div class="form-group"> 
+      <br>
+        <button type="button" class="btn btn-primary col-sm-6">登录</button>
+        <a href="/reguser"  type="button" class="btn btn-default pull-right" >免费注册</a>
+        
+      </div> 
+    </div>
+  </div>
+</fieldset>
+</form>
+
 <%- include footer %>

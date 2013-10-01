@@ -61,13 +61,28 @@ module.exports = function(app) {
     var a =  require(filepath);
     new a(app).route.forEach(function(val){
       if (val.auth && val.auth===true){
-        app.get(val.url,auths,val.func)
+        if (val.method && val.method=='post'){
+          app.post(val.url,auths,val.func);
+        }
+        else{
+          app.get(val.url,auths,val.func);
+        }
       }
       else if (val.auth){
-        app.get(val.url,val.auth,val.func) 
+        if(val.method && val.method=='post'){
+          app.post(val.url,val.auth,val.func);
+        }
+        else{
+          app.get(val.url,val.auth,val.func);
+        } 
       }
       else{
-        app.get(val.url,val.func) 
+        if(val.method && val.method=='post'){
+          app.post(val.url,val.func);
+        }
+        else{
+          app.get(val.url,val.func);
+        }
       }
     });  
   };

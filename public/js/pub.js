@@ -14,6 +14,9 @@
       interval: 2000
     });
 
+    //提示tooltip
+    $("[data-toggle]").tooltip({container: "body"});
+
   })
 }(window.jQuery)
 
