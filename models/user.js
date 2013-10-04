@@ -10,7 +10,7 @@ var userSchema=new Schema({
   point  : {type:Number},   //积分
   regdate: {type:Date,default:Date.now()},    //注册日期
 });
-db.model('user',userSchema);
+db.model('user',userSchema); //user 是 mongodb内的control名
 
 
 var User=db.model('user');
@@ -32,10 +32,18 @@ exports.userSave=function(user,callback){
 };
 
 exports.userFind=function(mail,callback){
-	User.findOne({mail:mail},function(err,doc){
-  	if(err){
-    	return callback(err,null);
-     }
-    callback(null,doc); // 用户名如果已经存在，将在调用函数内赋值err
-  })
+  debugger;
+  User.findOne({mail:mail}, null, null/*sort*/,function (err, doc) {
+    debugger;
+    console.log(err);
+    console.log(doc);
+    if(!err && doc){
+      console.log('a');
+      return callback(true,doc);
+    }
+    else{
+      console.log('b');
+      return callback(false,null);
+    }
+  });
 };

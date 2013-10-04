@@ -8,6 +8,7 @@ module.exports = function(app){
 	];
 
 	function index(req,res){
+    debugger;
 		res.render('index', {url:'/',mrlong:'33333377766',user:null});	
 	}
 

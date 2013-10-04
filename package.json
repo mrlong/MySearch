@@ -12,6 +12,7 @@
     "mongodb": "*",
     "mongoose":">=2.3.1",
     "connect-mongo":"*",
-    "connect-flash": "*"
+    "connect-flash": "*",
+    "nodemailer": "*"
   }
 }

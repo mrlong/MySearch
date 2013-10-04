@@ -1,5 +1,6 @@
 
 var user = require('../models/user');
+var util = require('../models/util');
 
 module.exports = function(app){
 
@@ -30,6 +31,11 @@ module.exports = function(app){
 			url:'/createuser',
 			method:'post',
 			func:createuser
+		},
+		{
+			url:'/getvercode',   //获取验证码
+			//method:'post',
+			func:getvercode
 		}
 
 	];
@@ -61,11 +67,41 @@ module.exports = function(app){
 	//检验邮箱
 	function verifymail(req,res){  
 		var mail = req.body.mail;
-		res.json(200,{
-				success:false,
-				msg:"邮箱已注册过了，不能再注册。",
-				mail:mail}
-		);
+		user.userFind(mail,function(err,doc){
+			var data={};
+			console.log(err);
+			if(err==false){
+				console.log('y');
+				data.success = true;
+				data.msg = "邮箱有效。";
+			}
+			else{
+				console.log('x');
+				data.success = false;
+				data.msg = "邮箱已注册过了，不能再注册。";
+			};
+			
+			res.json(200,data);
+		});
+		
+	}
+
+	function getvercode(req,res){
+		var myvercode = util.randomString();
+		var options ={
+			  to: 'mrlong@qzhsoft.com',
+	  		subject: app.get('title')+'注册验证码',
+				content: '注册验证码:' + myvercode + '\n\n\n' + '邮件是系统自动发出请不要回邮件。',
+				ishtml : false
+		};
+		util.sendmail(options,function(err){
+			if (!err){
+				res.json(200,{success:true,msg:'',vercode:myvercode});		
+			}
+			else{
+				res.json(200,{success:false,msg:'发送邮件异常出错，请联系客服。'});
+			}
+		})		
 	}
 }
 

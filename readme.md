@@ -55,4 +55,13 @@ browes -> routes -> controllers -> view  + models = html
     }
   }  
 
+
+4.目录规则
+   services 存放集成第三方的服务，如邮件服务，信息服务等
+   models
+   Views
+   controllers
+   
+
+
                                     
