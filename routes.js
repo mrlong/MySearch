@@ -1,8 +1,9 @@
 
 /*
- * GET home page.
+ * 路由功能
  */
 var fs=require('fs');
+var util = require('./services/util');
 
 module.exports = function(app) {
 
@@ -14,14 +15,7 @@ module.exports = function(app) {
       return next();
     } 
     else {
-      var ejs = require('ejs')
-          ,str = fs.readFileSync(app.get("views") + '/error.ejs', 'utf8');
-      var ret = ejs.render(str,{
-          content:"你没有登录，请登录！",
-          url:"/login",
-          title:app.get('title')
-      });
-      return res.send(ret);
+      return res.send(util.errBox("你没有登录，请登录！",'/login'));
     }
   };
   

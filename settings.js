@@ -4,11 +4,16 @@
 //
 
 module.exports = { 
+  debug: false,
+  title: 'mySearch',
+  port : 3000,            //web服务端口
   cookieSecret: 'myblog', 
-  db: 'blog', 
-  host: 'localhost',
-  dbport: 27017,
-
+  //
+  mongodb:{
+    db: 'blog', 
+    host: 'localhost',
+    dbport: 27017
+  },  
   //邮件发送
   smtp_opts: {
     host: 'smtp.163.com',

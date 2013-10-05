@@ -1,6 +1,8 @@
 
 var user = require('../models/user');
-var util = require('../models/util');
+var util = require('../services/util');
+var obj  = require('../services/obj');
+var service_mail = require('../services/mail');
 
 module.exports = function(app){
 
@@ -23,18 +25,23 @@ module.exports = function(app){
 			func:reguser
 		},
 		{
+			url:'/reguser/:mail/:name/:vercode',
+			method:'get',
+			func:reguser
+		},
+		{
+			url:'/reguser',
+			method:'post',
+			func:createuser
+		},
+		{
 			url:'/verifymail',   //校验邮箱
 			method:'post',       
 			func:verifymail
 		},
 		{
-			url:'/createuser',
-			method:'post',
-			func:createuser
-		},
-		{
 			url:'/getvercode',   //获取验证码
-			//method:'post',
+			method:'post',
 			func:getvercode
 		}
 
@@ -57,11 +64,28 @@ module.exports = function(app){
 
 	//注册用户
 	function reguser(req,res){
-		res.render('reguser',{url:'/login',title:app.get('title')});
+		var data={
+			mail:req.param('mail')||'',
+			name:req.param('name')||'',
+			vercode:req.param('vercode')||''
+		};
+		res.render('reguser',{
+				url:'/login',
+				title:app.get('title'),
+				data:data
+		});
 	}
 
 	function createuser(req,res){
-
+		var data= new obj({
+			mail    : req.param('mail').toLowerCase(),
+		 	name    : req.param('name'),
+		 	pass    : req.param('pass'),
+		 	vercode : req.param('vercode'),
+		});
+		data.trim().xss();
+		//写入库内
+		res.send(util.msgBox('注册成功，请重新登录！','/login'));		
 	}
 
 	//检验邮箱
@@ -88,15 +112,11 @@ module.exports = function(app){
 
 	function getvercode(req,res){
 		var myvercode = util.randomString();
-		var options ={
-			  to: 'mrlong@qzhsoft.com',
-	  		subject: app.get('title')+'注册验证码',
-				content: '注册验证码:' + myvercode + '\n\n\n' + '邮件是系统自动发出请不要回邮件。',
-				ishtml : false
-		};
-		util.sendmail(options,function(err){
+		var mail = req.param('mail');
+		var name = req.param('name');
+		service_mail.sendVerCodeMail(req, mail,name,myvercode,function(err){
 			if (!err){
-				res.json(200,{success:true,msg:'',vercode:myvercode});		
+				res.json(200,{success:true,msg:'验证码已发送到你的邮箱内。'});		
 			}
 			else{
 				res.json(200,{success:false,msg:'发送邮件异常出错，请联系客服。'});

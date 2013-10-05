@@ -1,4 +1,4 @@
-<%- include header %>
+<%- include header.html %>
 
 <script type="text/javascript">
   $(function(){
@@ -43,6 +43,27 @@
     $("#reader").on('click',function(){
       $("button[type='submit']")[this.checked?'removeClass':'addClass']('disabled')
     }) 
+
+    $("#getrevcode").on('click',function(){
+      var jthis = $(this);
+      var jparent = jthis.parent();
+      jparent.find('small').remove();
+      jthis.after('<small>正在请求中...</smaill>');
+      var data ={
+        mail : $("#mail").val(),
+        name : $("#name").val()
+      }
+      $.post('/getvercode',data,function(data,status){
+        if(status=='success' && data.success==true){
+          jparent.find('small').text("已将验证码发送到你的邮箱内。");
+          jparent.find('small').addClass('fontblue');
+        }
+        else{
+          jparent.find('small').text("提交服务器异常出错。");
+          jparent.find('small').addClass('fontred');
+        }
+      },'json');
+    });
   })
 </script>
 
@@ -52,7 +73,7 @@
   }
  
 </style>
-<form class="form-horizontal"  action="/createuser" role="form">
+<form class="form-horizontal"  action="/reguser" role="form" method="post">
   <fieldset>
   <legend class="pull-right">免费注册用户</legend>
   <div class="row">
@@ -60,7 +81,7 @@
       <div class="form-group">
         <label for="mail" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="mail" placeholder="xxxx@qq.com" check-type="mail required">
+          <input type="text" class="form-control" id="mail" name='mail' placeholder="xxxx@qq.com" check-type="mail required" value="<%=data.mail%>">
         </div>
         <div class="col-sm-offset-2 col-sm-10">
           <span class="help-block" style="color: #000000;padding-top: 10px;">请填写真实的邮箱，在注册之前会将验证码发送到你的邮箱内.</span>
@@ -70,14 +91,14 @@
       <div class="form-group">
         <label for="name" class="col-sm-2 control-label">用户名</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="name" check-type="required">
+          <input type="text" class="form-control" id="name" name='name' check-type="required" value="<%=data.name%>">
         </div>
       </div>
 
       <div class="form-group">
         <label for="pw1" class="col-sm-2 control-label">密码</label>
         <div class="col-sm-6">
-          <input type="password" class="form-control" id="pw1" check-type="required" minlength="6">
+          <input type="password" class="form-control" id="pw1" name='pass' check-type="required" minlength="6">
         </div>
       </div>
 
@@ -91,8 +112,8 @@
       <div class="form-group">
         <label for="vercode" class="col-sm-2 control-label">验证码</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="vercode" check-type="date" range="2.2,5">
-          <button class="btn btn-link" type="button" data-toggle="tooltip" title="验证码会以邮件的方式发送到你的上面填写的邮箱内" data-placement="right" id="getvercode" >获取验证码</button>
+          <input type="text" class="form-control" id="vercode" name='vercode' check-type="required" value="<%=data.vercode%>">
+          <a id="getrevcode" class="btn btn-link" type="button" data-toggle="tooltip" title="验证码会以邮件的方式发送到你的上面填写的邮箱内" data-placement="right" id="getvercode">获取验证码</a>
         </div>
       </div>  
 
@@ -131,4 +152,4 @@
 </fieldset>
 </form>
 
-<%- include footer %>
+<%- include footer.html %>
