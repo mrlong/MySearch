@@ -1,13 +1,20 @@
 <%- include header.html %>
 </div></div>
-<% if (user==null) { %>
+<% if (locals.user) { %>
+  <div style="background-color:#D9EDF7" >
+    <div class="container" style="padding-top: 8px; padding-bottom: 8px;">  
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      欢迎,<%=locals.user.name%> 。
+    </div>  
+  </div>
+<% } else { %>
   <div style="background-color:#D9EDF7" >
     <div class="container" style="padding-top: 8px; padding-bottom: 8px;">  
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       <a href="/reguser">免费注册</a> <strong>加入我们</strong>发现工作更简单。
     </div>  
   </div>
-<% } %>
+<%}%>
 
 <div class="container">
 <div class="main box">
@@ -57,6 +64,7 @@
 <!-- 内容了 -->
 <div class="page-header">
 <h1>与从不同<small>与市上的系统有什么不同。</small><h1>
+  <%=locals.title%>
   <iframe src="http://fast.wistia.net/embed/iframe/g1d312lbg8" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="940" height="534"></iframe>
 </div>
 

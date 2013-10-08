@@ -12,16 +12,25 @@ a {
 .container{
   width: 960px;
 }
-
 .carousel-inner img{
   width: 960px;
   height: 500px;
 }
 
+/*设字体色*/
 .fontred{
   color:#FF0000;
 }
-
 .fontblue{
   color:#6633FF;
+}
+
+/*网站左上角的标题*/
+.navbar-title
+{
+  margin-left: 0px;
+  color:#0088CC;
+  font-size:20px;
+  padding-left: 10px; 
+  padding-right: 5px;
 }

@@ -1,6 +1,7 @@
 
 var settings=require('../settings');
 var fs=require('fs');
+var crypto = require('crypto');
 
 //生成随机码
 // size 长度，如不写是6
@@ -50,4 +51,32 @@ exports.errBox=function(msg,url){
       });
   return ret;
 };
+
+//字符串加密
+exports.encrypt=function(str, secret) {
+  var cipher = crypto.createCipher('aes192', secret);
+  var enc = cipher.update(str, 'utf8', 'hex');
+  enc += cipher.final('hex');
+  return enc;
+}
+
+//字符串解密
+exports.decrypt=function(str, secret) {
+  var decipher = crypto.createDecipher('aes192', secret);
+  var dec = decipher.update(str, 'hex', 'utf8');
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+//
+// 提示错误窗口
+// @param {string} str 
+// 返回提示的字符串内容
+//
+exports.md5=function (str) {
+  var md5sum = crypto.createHash('md5');
+  md5sum.update(str);
+  str = md5sum.digest('hex');
+  return str;
+}
  

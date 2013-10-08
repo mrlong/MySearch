@@ -41,14 +41,21 @@ browes -> routes -> controllers -> view  + models = html
    module.exports = function(app){
       this.route=[
         {
-          url:  '',    //路由,如是二级目录则要写/xxx/xxx, 尽量定的路由与目录结构一样
-          auth: true,  //=true表示要认证, 可以是 function(req,res){}  
-          method: 'post',  //如没有method 表示使用get方法，现只支持post与get方法
-          func: myfunc
-        }
+          url:  '',      //路由,如是二级目录则要写/xxx/xxx, 尽量定的路由与目录结构一样
+          auth: true,    //=true表示要认证, 可以是 function(req,res,next){}  
+          get: myfunc,   //表示使用get方法
+          post:myfunc2   //post方法
+        },
+        ...
       ]
 
-      function myfunc(req,res){
+      //get
+      function myfunc(req,res,next){
+        ...
+      };
+
+      //post
+      function myfunc2(req,res,next){
         ...
       };
 

@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="description" content="外贸 软件 搜索 邮件 mail">
     <meta name="author" content="mrlong.com@gmail.com">
-    <title>MySearch</title>
+    <title><%=settings.title%></title>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
@@ -17,7 +17,7 @@
 
     $(function(){
       $("li[class='active']").removeClass('active');
-      $("li a[href='<%-url%>']").parent().addClass('active');    
+      $("li a[href='<%=url%>']").parent().addClass('active');    
     })
   </script>
 
@@ -28,16 +28,21 @@
     <div class="container"> 
         
       <div class="navbar-header">
-        <a class="navbar-brand" href="/" style="margin-left: 0px;color:#0088CC;font-size:20px">Brand</a>
+        <a class="navbar-brand navbar-title" href="/" style="color:#0088CC;"><%=settings.title%></a>
       </div>
         
       <div class="collapse navbar-collapse navbar-ex9-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">首页</a></li>
-          <li><a href="/login">登录</a></li>
+          <%if(!locals.user){%>
+            <li><a href="/login">登录</a></li>
+          <%}%>
           <li><a href="/vip/home">用户中心</a></li>
         </ul>
-        <p class="navbar-text pull-right">Signed in as <a href="#" class="navbar-link">Mark Otto</a></p>
+
+        <%if(locals.user){%>
+          <p class="navbar-text pull-right">欢迎,<%=locals.user.name%>! <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span></p>
+        <%}%>
       </div>
       
     </div> 

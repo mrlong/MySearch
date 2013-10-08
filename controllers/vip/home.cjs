@@ -6,11 +6,11 @@ module.exports = function(app){
 	this.route=[
 		{ url:'/vip/home',
 			auth:true,
-			func:home
+			get:home
 		}
 	];
 
-	function home(req,res){
-		res.render('vip/home', {url:'/vip',mrlong:'33333377766',user:null });
+	function home(req,res,next){
+		res.render('vip/home', {url:'/vip/home'});
 	}
 }

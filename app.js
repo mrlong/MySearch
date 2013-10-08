@@ -19,6 +19,7 @@ settings.viewdir       = __dirname + '/views';
 settings.controllerdir = __dirname + '/controllers';
 settings.modueldir     = __dirname + '/models';
 settings.servicedir    = __dirname + '/services';
+settings.publicdir     = __dirname + '/public';
 
 var app = express();
 // all environments
@@ -50,9 +51,17 @@ app.configure(function (){
   }));
 
   app.use(app.router);
-  app.use(require('stylus').middleware(__dirname + '/public'));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(require('stylus').middleware(settings.publicdir));
+  app.use(express.static(path.join(settings.publicdir)));
+
 });
+
+
+// app.locals({
+//   title: 'My App',
+//   phone: '1-250-858-9990',
+//   email: 'me@myapp.com'
+// });
 
 // development only
 if ('development' == app.get('env')) {

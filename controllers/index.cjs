@@ -1,15 +1,14 @@
-
 //首页
 module.exports = function(app){
 	this.route=[
 		{ url:'/',
-			func:index
+			get:index
 		}
 	];
 
-	function index(req,res){
+	function index(req,res,next){
     debugger;
-		res.render('index', {url:'/',mrlong:'33333377766',user:null});	
+    res.render('index', {url:'/'});	
 	}
 
 }
