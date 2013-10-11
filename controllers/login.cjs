@@ -38,6 +38,10 @@ module.exports = function(app){
 			post:verifymail
 		},
 		{
+			url:'/verifyvercode', //校验验证码是否有效。
+			post:verifyvercode
+		},
+		{
 			url:'/getvercode',   //获取验证码
 			post:getvercode
 		},
@@ -108,6 +112,7 @@ module.exports = function(app){
 		});
 	}
 
+  //创建用户并写入到库内
 	function createuser(req,res,next){
 		var data= new Obj({
 			mail    : req.param('mail').toLowerCase(),
@@ -117,10 +122,20 @@ module.exports = function(app){
 		});
 		data.trim().xss();
 		data.pass = Util.md5(data.pass); //MD5写入库。
+		if (!req.session.vercode){
+			res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
+		}
+		else{
+			if (req.session.vercode.mail != mail || req.session.vercode.vercode != vercode){
+				res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
+			};
+		};
+
 		//写入库内
 		User.userSave(data,function(err){
 			if(!err){
 				res.send(Util.msgBox('注册成功，请重新登录！','/login'));
+				req.session.vercode={}; //清空原来的值
 			}
 			else{
 				res.send(Util.errBox('注册失败！','/reguser'));
@@ -145,29 +160,14 @@ module.exports = function(app){
 				data.success = false;
 				data.msg = "邮箱已注册过了，不能再注册。";
 			};
-			
 			res.json(200,data);
 		});
 		
 	}
 
-	function getvercode(req,res,next){
-		var myvercode = Util.randomString();
-		var mail = req.param('mail');
-		var name = req.param('name');
-		service_mail.sendVerCodeMail(req, mail,name,myvercode,function(err){
-			if (!err){
-				res.json(200,{success:true,msg:'验证码已发送到你的邮箱内。'});		
-			}
-			else{
-				res.json(200,{success:false,msg:'发送邮件异常出错，请联系客服。'});
-			}
-		})		
-	};
-
 	//修改密码：
 	function changepass(req,res,next){
-		var data=new Obj({
+		var data = new Obj({
 			oldpass:req.param('pass'),
 			pass:req.param('pass1')
 		});
@@ -191,7 +191,53 @@ module.exports = function(app){
   	});
 	};
 
-	//
+	//获取验证码
+	function getvercode(req,res,next){
+		var data= new Obj({
+			mail:req.param('mail'),
+			name:req.param('name'),
+			style:req.param('style')
+		});
+		data.trim().xss();
+		if (req.session.vercode && req.session.vercode.mail==data.mail){
+			var myvercode = req.session.vercode.vercode; //采用原来的，因为用户如多次点了获取这样就同一个了。
+		}	
+		else{	
+			var myvercode = Util.randomString();
+			req.session.vercode = {mail:data.mail,
+				vercode:myvercode,style:data.style};
+		};
+		service_mail.sendVerCodeMail(req,data.mail,data.name,myvercode,function(err){
+			if (!err){
+				res.json(200,{success:true,msg:'验证码已发送到你的邮箱内。'});		
+			}
+			else{
+				res.json(200,{success:false,msg:'发送邮件异常出错，请联系客服。'});
+			}
+		})		
+	};
+
+	//校验验证码是否正确
+	function verifyvercode(req,res,next){
+		var data = new Obj({
+			style : req.param('style'),
+			mail : req.param('mail'),
+			vercode : req.param('vercode')
+		});
+		data.trim().xss();
+		if (req.session.vercode){
+			if (req.session.vercode.mail==data.mail && req.session.vercode.style==data.style && 
+				  req.session.vercode.vercode==data.vercode){
+				res.send({success:true,msg:'验证码有效。'});
+			}
+		  else{
+		  	res.send({success:false,msg:'验证码无效。'});
+		  };
+		}
+		else{
+			res.send({success:false,msg:'请先获取验证码。'});
+		};
+	};
 
 }
 

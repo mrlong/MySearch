@@ -4,9 +4,7 @@
   $(function(){
     $("form").validation(function(obj,params){
       if (obj.id=='mail'){
-        var data={
-          mail:$(obj).val()
-        }
+        var data={mail:$(obj).val()}
         $.post("/verifymail",data,function(data,status){
           if(status == 'success'){
             params.err = !data.success;
@@ -16,6 +14,23 @@
             params.err = true;
             params.msg = '提交服务器异常出错。'+status;
           }
+        },'json');
+      };
+      if(obj.id=='vercode'){
+        var data={
+            mail:$("#mail").val(),
+            vercode:$(obj).val(),
+            style:'reguser'
+        };
+        $.post("/verifyvercode",data,function(data,status){
+          if(status=='success'){
+            params.err = !data.success;
+            params.msg = data.msg; 
+          }
+          else{
+            params.err = true;
+            params.msg = '提交服务器异常出错。'+status;
+          };
         },'json');
       }},
       {reqmark:false}
@@ -50,9 +65,10 @@
       jparent.find('small').remove();
       jthis.after('<small>正在请求中...</smaill>');
       var data ={
-        mail : $("#mail").val(),
-        name : $("#name").val()
-      }
+        mail  : $("#mail").val(),
+        name  : $("#name").val(),
+        style : 'reguser'
+      };
       $.post('/getvercode',data,function(data,status){
         if(status=='success' && data.success==true){
           jparent.find('small').text("已将验证码发送到你的邮箱内。");

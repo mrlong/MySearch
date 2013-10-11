@@ -7,7 +7,7 @@ module.exports = function(app){
 	];
 
 	function index(req,res,next){
-    debugger;
+    //debugger;
     res.render('index', {url:'/'});	
 	}
 
