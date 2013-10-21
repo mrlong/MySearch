@@ -5,7 +5,36 @@
     
   })
 </script>
+<p>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><%=locals.user.name%></div>
+      <div class="panel-body">
+        <p>注册邮箱：<%=locals.user.mail%></p>
+        <p>注册日期：<%=locals.user.regdate2%></p>
+        <p>积分：<%=locals.user.point%></p>
+        <p>登录次数:<span class="badge"><%=locals.user.logincount%></span> 最后登录日期:<%=locals.user.lastlogin2%></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">操作功能</div>
+      <div class="panel-body">
+        <a href="/chagpass">修改密码</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>xssss</h1>
-<a href="/chagpass">修改密码</a>
+<div class="panel panel-default">
+  <div class="panel-heading">关注内容</div>
+  <div class="panel-body">
+    //关注的内容？
+  </div>
+</div>
+
+
+
 <%- include ../footer.html %>

@@ -4,11 +4,13 @@
 var db=require('./db');
 var Schema=require('mongoose').Schema;
 var userSchema=new Schema({
- 	mail   : {type:String},   //邮箱
-  name   : {type:String},   //用户名 
-  pass   : {type:String},   //密码 md5.base64
+ 	mail   : {type:String,trim: true},   //邮箱
+  name   : {type:String,trim: true},   //用户名 
+  pass   : {type:String,trim: true},   //密码 md5.base64
   point  : {type:Number,default:0},   //积分
-  regdate: {type:Date,default:Date.now()},    //注册日期
+  regdate: {type:Date,default:Date.now},    //注册日期
+  logincount:{type:Number, default: 0},  //登录次数
+  lastlogin: {type:Date,default:Date.now} //最后登录的时间
 });
 db.model('user',userSchema); //user 是 mongodb内的control名
 

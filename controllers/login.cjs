@@ -74,7 +74,9 @@ module.exports = function(app){
     	if (data.pass !== user.pass) {
       	return res.send(Util.errBox('密码错误','/login'));
     	}
-
+    	user.logincount++;
+    	user.lastlogin = Date.now();
+    	user.save();
     	var auth_token = Util.encrypt(user.id + '\t' + 
     		user.name + '\t' + 
     		user.pass + '\t' + 
@@ -122,11 +124,11 @@ module.exports = function(app){
 		});
 		data.trim().xss();
 		data.pass = Util.md5(data.pass); //MD5写入库。
-		if (!req.session.vercode){
+		if (!req.session.vercode || !req.session.vercode.mail ){
 			res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
 		}
 		else{
-			if (req.session.vercode.mail != mail || req.session.vercode.vercode != vercode){
+			if (req.session.vercode.mail != data.mail || req.session.vercode.vercode != data.vercode){
 				res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
 			};
 		};
