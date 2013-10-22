@@ -2,26 +2,35 @@
 
 <script type="text/javascript">
   $(function(){
-    
+    // 
   })
 </script>
 <p>
 <div class="row">
   <div class="col-md-6">
     <div class="panel panel-default">
-      <div class="panel-heading"><%=locals.user.name%></div>
-      <div class="panel-body">
-        <p>注册邮箱：<%=locals.user.mail%></p>
-        <p>注册日期：<%=locals.user.regdate2%></p>
-        <p>积分：<%=locals.user.point%></p>
-        <p>登录次数:<span class="badge"><%=locals.user.logincount%></span> 最后登录日期:<%=locals.user.lastlogin2%></p>
-      </div>
+        <div class="panel-heading"><%=locals.user.name%></div>
+        <div class="panel-body">
+          <div class="row">
+          <div class="col-md-3">
+            <img src="/img/no_head.png" alt="..." class="img-rounded">
+            <small><a href="/vip/chagusericon">替换头像</a></small>
+          </div>
+          <div class="col-md-9">  
+          <p>注册邮箱：<%=locals.user.mail%></p>
+          <p>注册日期：<%=locals.user.regdate2%></p>
+          <p>积分：<%=locals.user.point%></p>
+          <p>登录次数:<span class="badge"><%=locals.user.logincount%></span> 最后登录日期:<%=locals.user.lastlogin2%></p>
+          </div>
+          </div>
+        </div>
+
     </div>
   </div>
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">操作功能</div>
-      <div class="panel-body">
+      <div class="panel-body" style="height: 150px;">
         <a href="/chagpass">修改密码</a>
       </div>
     </div>

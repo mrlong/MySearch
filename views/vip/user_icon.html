@@ -1,0 +1,40 @@
+<%- include ../header.html %>
+
+<style type="text/css">
+  form{
+    padding-top: 20px;
+  }
+ 
+</style>
+
+<form>
+  <fieldset>
+  <legend class="pull-right">更换头像</legend>
+  <div class="row">
+    <div class="col-md-8">
+      <input name="random" id="random" value="1314414282450" type="hidden">  
+      <div class="form-group">
+        <label for="pw1" class="col-sm-2 ">图像文件</label>
+        <span class="btn btn-success fileinput-button">
+          <i class="glyphicon glyphicon-plus"></i>
+          <span>Add files...</span>
+          <input type="file" name="files[]" multiple>
+        </span>
+        
+      </div>
+      
+      <div class="form-group">
+        <div class="col-sm-6">
+
+        </div>
+      </div>
+      
+
+    </div>
+    <div class="col-md-4">
+
+    </div>
+  </fieldset>
+</form>
+
+<%- include ../footer.html %>

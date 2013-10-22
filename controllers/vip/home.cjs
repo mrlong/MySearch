@@ -8,6 +8,10 @@ module.exports = function(app){
 		{ url:'/vip/home',
 			auth:true,
 			get:home
+		},
+		{
+			url:'/vip/chagusericon',
+			get:function(req,res,next){res.render('vip/user_icon',{url:'/vip/home'});}
 		}
 	];
 
