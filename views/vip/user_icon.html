@@ -4,8 +4,71 @@
   form{
     padding-top: 20px;
   }
- 
+  #form_save,#imguser,#btn_saves {
+    display:none
+  }
 </style>
+
+<script type="text/javascript">
+  $(function(){
+    
+    $("#flieupload").on('click',function(){
+      var data = new FormData();  
+      var files = $('#file')[0].files;  
+      if (files.length>0){  
+        data.append('codecsv',files[0]);  
+      }
+      else{
+        alert('请选择上传的文件。');
+        return false;
+      };
+
+      $.ajax({cache: false,  
+              type: 'post',  
+              dataType: 'json',  
+              url:'/vip/upload_usericon',                    
+              data : data,  
+              contentType: false,  
+              processData: false,  
+              success:function(data,textStatus){  
+                $("#imguser").attr('src',data.img);
+                $("#imguser").attr('path',data.imgpath);
+                if( $("imguser").css("display")=='none'){  
+                  $("#imguser").show();
+                }
+                $("#imguser").ready(function(){
+                    $('#imguser').Jcrop({
+                    setSelect: [ 10, 10, 210, 210 ],
+                    aspectRatio: 1,
+                    onChange: showCoords,
+                    onSelect: showCoords
+                  });
+                });
+                $("#btn_saves").show();
+              },
+              error:function(){
+                alert('上传出错');
+              }  
+      });  
+
+    });
+
+    //区域保存
+    $("#btn_save_region").on('click',function(){
+      var args = 'left='+$("#img_left").val()+'&top='+$("#img_top").val()+'&width='+$("#img_width").val()+'&height='+$("#img_height").val()+'&imgpath='+$("#imguser").attr('imgpath');
+
+    });
+
+  });
+
+  function showCoords(c){
+    $('#img_left').val(c.x);
+    $('#img_top').val(c.y);
+    $('#img_width').val(c.w);
+    $('#img_height').val(c.h);
+  };
+
+</script>
 
 <form>
   <fieldset>
@@ -18,9 +81,16 @@
         <span class="btn btn-success fileinput-button">
           <i class="glyphicon glyphicon-plus"></i>
           <span>Add files...</span>
-          <input type="file" name="files[]" multiple>
+          <input type="file" id="file" name="files[]" multiple>
         </span>
-        
+        <button type="button" class="btn btn-primary" id="flieupload">上传</button>
+      </div>
+      <img id="imguser" class="img-responsive" >
+
+      <div id="btn_saves" >
+        <input type='button' value='保存选中区域' id='btn_save_region' class='btn btn-primary'/>
+        <input type='button' value='保存全图' id='btn_save_all' class='btn btn-primary'/> 选择“保存全图”头像可能会变形
+      </div>
       </div>
       
       <div class="form-group">
@@ -37,4 +107,14 @@
   </fieldset>
 </form>
 
+<form id='form_save' action="/action/user/save_portrait" >
+  <input type='hidden' id='img_left' name='left' value='0'/>
+  <input type='hidden' id='img_top' name='top' value='0'/>
+  <input type='hidden' id='img_width' name='width' value='0'/>
+  <input type='hidden' id='img_height' name='height' value='0'/>
+</form>
+
+
+<script type="text/javascript" src="/js/jquery.jcrop.min.js" ></script>
+<link rel='stylesheet' href='/css/jquery.Jcrop.min.css'/>
 <%- include ../footer.html %>

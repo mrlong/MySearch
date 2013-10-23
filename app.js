@@ -20,6 +20,7 @@ settings.controllerdir = __dirname + '/controllers';
 settings.modueldir     = __dirname + '/models';
 settings.servicedir    = __dirname + '/services';
 settings.publicdir     = __dirname + '/public';
+settings.uploaddir     = __dirname + settings.uploaddir;
 
 var app = express();
 // all environments
@@ -53,7 +54,7 @@ app.configure(function (){
   app.use(app.router);
   app.use(require('stylus').middleware(settings.publicdir));
   app.use(express.static(path.join(settings.publicdir)));
-
+  app.use(express.bodyParser({uploadDir:settings.uploaddir}));
 });
 
 

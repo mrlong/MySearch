@@ -34,9 +34,13 @@ module.exports = function(app) {
       var user_id = auth[0];
       user.getUserById(user_id,function(err,user){
         if(!err && user){
+          user.logincount++;
+          user.lastlogin = Date.now();
+          user.save();
           req.session.user = user;
           req.session.user.name = 'mrlong'
           res.locals.user = user;
+
           return next();
         }
         else{

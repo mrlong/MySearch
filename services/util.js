@@ -119,4 +119,11 @@ exports.format_date = function (date, friendly) {
   //year = (thisYear === year) ? '' : (year + '-');
   return year + '-' + month + '-' + day + ' ' + hour + ':' + minute;
 };
- 
+
+//
+// 获取文件的扩展名
+//
+exports.getFileExt = function(file){ 
+  var d=/\.[^\.]+$/.exec(file); 
+  return d; 
+};

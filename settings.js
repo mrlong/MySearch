@@ -28,6 +28,8 @@ module.exports = {
   manager:{
     email:'mrlong.com@gmail.com',
     tel:'13857121269'
-  }
+  },
+  //下载目录,在发布的根目录下
+  uploaddir:'/upload'
   
 }; 
