@@ -4,7 +4,7 @@
   form{
     padding-top: 20px;
   }
-  #form_save,#imguser,#btn_saves {
+  #form_save,#btn_saves {
     display:none
   }
 </style>
@@ -40,8 +40,8 @@
                     $('#imguser').Jcrop({
                     setSelect: [ 10, 10, 210, 210 ],
                     aspectRatio: 1,
-                    onChange: showCoords,
-                    onSelect: showCoords
+                    onChange: showCoords
+                    //onSelect: showCoords
                   });
                 });
                 $("#btn_saves").show();
