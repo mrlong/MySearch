@@ -15,6 +15,9 @@
     "connect-flash": "*",
     "nodemailer": "0.5.3",
     "validator": "=1.5.1",
-    "crypto":"0.0.3"
+    "crypto":"0.0.3",
+    "gm": "*"     
   }
 }
+
+
