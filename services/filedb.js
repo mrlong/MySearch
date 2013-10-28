@@ -28,7 +28,7 @@ exports.writefile=function(filepath,callback){
     var gridStore = new GridStore(connect,fileId,filename,'w');//创建文件
     gridStore.open(function(err,gridStore){
       console.log(err);
-      if(!err){
+      if(!err && gridStore){
         gridStore.writeFile(filepath,function(err,gridStore){
           gridStore.close(function(err,result){
             //console.log(result._id);

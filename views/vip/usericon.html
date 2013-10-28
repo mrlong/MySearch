@@ -52,8 +52,19 @@
     
     //区域保存
     $("#btn_save_region").on('click',function(){
-      var args = 'left='+$("#img_left").val()+'&top='+$("#img_top").val()+'&width='+$("#img_width").val()+'&height='+$("#img_height").val()+'&imgpath='+$("#imguser").attr('imgpath');
-
+      $.post('/vip/save_usericonregion',{
+        imgpath:$("#imguser").attr('path'),
+        left:$("#img_left").val(),
+        top:$("#img_top").val(),
+        width:$("#img_width").val(),
+        height:$("#img_height").val()},function(data,textStatus){
+          if(textStatus=='success'){
+            alert(data.msg);
+          }
+          else{
+            alert('保存失败');
+          }
+        });
     });
 
     //保存全域
@@ -95,30 +106,33 @@
 
 </script>
 
-<form>
+<form >
   <fieldset>
   <legend class="pull-right">更换头像</legend>
   <div class="row">
     <div class="col-md-8">
-      <input name="random" id="random" value="1314414282450" type="hidden">  
       <div class="form-group">
-        <label for="pw1" class="col-sm-2 ">图像文件</label>
+        <label for="pw1" class="col-sm-2 ">选择图像</label>
         <input type="file" id="file" name="files">
         <button type="button" class="btn btn-primary" id="flieupload">上传</button>
       </div>
       <img id="imguser" class="img-responsive" >
+      <p>
       <div class="form-group">
-      <div id="btn_saves" >
-        <input type='button' value='保存选中区域' id='btn_save_region' class='btn btn-primary'/>
-        <input type='button' value='保存全图' id='btn_save_all' class='btn btn-primary'/> 选择“保存全图”头像可能会变形
+        <div id="btn_saves" >
+          <input type='button' value='保存选中区域' id='btn_save_region' class='btn btn-primary'/>
+          <input type='button' value='保存全图' id='btn_save_all' class='btn btn-primary'/> 选择“保存全图”头像可能会变形
+        </div>
       </div>
-      </div>
-      </div>
-                 
-
     </div>
     <div class="col-md-4">
-
+      <div class="alert alert-info">
+        <h4>如何替换头像？</h4>
+        <p>第1步：选择图像文件，尽量选择jpg,gif,png格式，大小不要太大。</p>
+        <p>第2步：点［上传］按钮，下方会显示你选择的图片。</p>
+        <p>第3步：图片的左下方有两个按钮：［保存选中区域］及［保存全图］。</p>
+        <p>第4步：根据你的需要点［保存选中区域］或［保存全图］。</p>
+      </div> 
     </div>
   </fieldset>
 </form>

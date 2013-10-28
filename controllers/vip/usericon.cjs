@@ -26,6 +26,11 @@ module.exports = function(app){
       url:'/vip/getusericon',   //获取用户的头像
       auth:true,
       get:getusericon
+    },
+    {
+      url:'/vip/save_usericonregion', //保存选择的区域
+      auth:true,
+      post:save_usericonregion
     }
 
   ];
@@ -126,6 +131,50 @@ module.exports = function(app){
         });
         res.send(data);
         
+      });
+    });
+  };
+
+  //保存选择区域的文件
+  function save_usericonregion(req,res,next){
+    var data= new Obj({
+      imgpath:req.param('imgpath'),
+      left:req.param('left'),
+      top:req.param('top'),
+      width:req.param('width'),
+      height:req.param('height')
+    });   
+    data.trim().xss();
+
+    //当前用户
+    User.getUserById(req.session.user._id, function (err, user) {
+      if (err || !user) {
+        return next(err);
+      };
+      var imgname=Util.randomString(10) + Util.getFileExt(data.imgpath);
+      var img = settings.publicdir+'/'+imgname;
+      Mg.Crop(data.imgpath,[parseInt(data.left),parseInt(data.top),
+        parseInt(data.width),parseInt(data.height)],img,function(err){
+        fs.unlinkSync(data.imgpath);
+        if (err) {
+          res.send({success:false,msg:'图片处理大小出错。'});
+          return false;
+        };
+        Filedb.removefile(user.icon);//删除原来的。
+        Filedb.writefile(img,function(err,data){
+          fs.unlinkSync(img);
+          if (err){
+            res.send({success:false,msg:'图片保存到库内出错。'});
+            return false;
+          };
+          user.icon = data._id;
+          user.save(function (err){
+            if (err) {
+              return next(err);
+            };
+            res.send({success:true,msg:'替换头像成功'});
+          });  
+        });
       });
     });
   };
