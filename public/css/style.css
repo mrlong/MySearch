@@ -34,3 +34,8 @@ a {
   padding-left: 10px; 
   padding-right: 5px;
 }
+
+/*工具条高度*/
+.navbar{
+  height: 49px;
+}

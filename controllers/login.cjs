@@ -44,13 +44,8 @@ module.exports = function(app){
 		{
 			url:'/getvercode',   //获取验证码
 			post:getvercode
-		},
-		{
-			url:'/chagpass',
-			auth:true, 
-			get:function(req,res,next){res.render('chagpass',{url:'/vip/home'});},
-			post:changepass
 		}
+		
 
 	];
 
@@ -167,32 +162,7 @@ module.exports = function(app){
 		
 	}
 
-	//修改密码：
-	function changepass(req,res,next){
-		var data = new Obj({
-			oldpass:req.param('pass'),
-			pass:req.param('pass1')
-		});
-		data.trim().xss();
-
-		if (Util.md5(data.oldpass) != req.session.user.pass){
-			res.send(Util.errBox('原密码不正确，请重新输入！','/chagpass'));	
-		};
-
-		User.getUserById(req.session.user._id, function (err, user) {
-      if (err) {
-        return next(err);
-      };
-      user.pass=Util.md5(data.pass);
-      user.save(function (err){
-        if (err) {
-          return next(err);
-        };
-        res.send(Util.msgBox('修改密码功能!','/vip/home'));
-      });
-  	});
-	};
-
+	
 	//获取验证码
 	function getvercode(req,res,next){
 		var data= new Obj({

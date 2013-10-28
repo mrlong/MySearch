@@ -74,4 +74,55 @@ exports.readfile=function(id,callback){
     });
     
   });
-};    
+};   
+
+// 删除文件
+// id = ObjectID
+exports.removefile=function(id,callback){
+  var server = new mongodb.Server(settings.mongodb.host, settings.mongodb.dbport),
+      connect = new mongodb.Db(settings.mongodb.db, server,{safe:false});
+  connect.open(function (err, db) {
+    if(err){
+      if(callback){callback(err);};
+      return false;
+    };
+    var gridStore = new GridStore(connect,id,'r');
+    gridStore.open(function(err,gridStore){
+      if(!err){
+        gridStore.unlink(function(err, result) {
+          if(callback){callback(err,result);};
+          db.close();
+        });
+      }
+      else{
+        if(callback){callback(err);};
+      }
+    });
+  });
+};
+
+//确定文件是否存在
+//
+// Filedb.existfile(id,function(err,exist){
+//   if(exist==true){
+//      ...存在。。。 
+//    } 
+// });
+//
+exports.existfile=function(id,callback){
+  var server = new mongodb.Server(settings.mongodb.host, settings.mongodb.dbport),
+      connect = new mongodb.Db(settings.mongodb.db, server,{safe:false});
+  connect.open(function (err, db) {
+    if(err){
+      callback(err);
+      return false;
+    };
+    GridStore.exist(db,id, function(err, result){
+      callback(err,result);
+      db.close();
+      // assert.equal(null, err);
+      // assert.equal(true, result);
+    });
+
+  });
+};

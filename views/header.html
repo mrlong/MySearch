@@ -9,6 +9,8 @@
     <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap-theme.min.css">
+    <link href="/js/artDialog/default.css" rel="stylesheet" />
+    <script src="/js/artDialog/jquery.artDialog.min.js"></script>
     <script type="text/javascript" src="/js/bootstrap3-validation.js"></script>
     <script type="text/javascript" src="/js/pub.js"></script>
     <link rel='stylesheet' href='/css/style.css' />
@@ -42,7 +44,7 @@
         </ul>
 
         <%if(locals.user){%>
-          <p class="navbar-text pull-right">欢迎,<%=locals.user.name%>! <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span></p>
+          <p class="navbar-text pull-right"><img id="navimg" style="width: 20px;height:20px;" src="/vip/getusericon" class="img-rounded"> <%=locals.user.name%>! <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span></p>
         <%}%>
       </div>
       

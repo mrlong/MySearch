@@ -5,6 +5,12 @@
     // 
   })
 </script>
+<style type="text/css">
+  #homeimg{
+    width: 100px; 
+    height: 100px;
+  }
+</style>
 <p>
 <div class="row">
   <div class="col-md-6">
@@ -13,8 +19,9 @@
         <div class="panel-body">
           <div class="row">
           <div class="col-md-3">
-            <img src="/img/no_head.png" alt="..." class="img-rounded">
-            <small><a href="/vip/chagusericon">替换头像</a></small>
+            <!-- /img/no_head.png -->
+            <img src="/vip/getusericon" alt="..." class="img-rounded" id="homeimg">
+            <small><a href="/vip/usericon">替换头像</a></small>
           </div>
           <div class="col-md-9">  
           <p>注册邮箱：<%=locals.user.mail%></p>
@@ -31,7 +38,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">操作功能</div>
       <div class="panel-body" style="height: 150px;">
-        <a href="/chagpass">修改密码</a>
+        <a href="/vip/chagpass">修改密码</a>
       </div>
     </div>
   </div>
@@ -43,6 +50,7 @@
     //关注的内容？
   </div>
 </div>
+
 
 
 

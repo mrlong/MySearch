@@ -56,6 +56,18 @@
 
     });
 
+    //保存全域
+    $("#btn_save_all").on('click',function(){
+      $.post('/vip/save_usericon',{imgpath:$("#imguser").attr('path')},function(data,textStatus){
+        if(textStatus=='success'){
+          alert(data.msg);
+        }
+        else{
+          alert('保存失败');
+        }
+      });
+    });
+
   });
 
   function initJcrop(data){
@@ -102,13 +114,7 @@
       </div>
       </div>
       </div>
-      
-      <div class="form-group">
-        <div class="col-sm-6">
-
-        </div>
-      </div>
-      
+                 
 
     </div>
     <div class="col-md-4">
@@ -123,6 +129,7 @@
   <input type='hidden' id='img_width' name='width' value='0'/>
   <input type='hidden' id='img_height' name='height' value='0'/>
 </form>
+
 
 <script type="text/javascript" src="/js/jquery.Jcrop.min.js" ></script>
 <link rel='stylesheet' href='/css/jquery.Jcrop.min.css'/>
