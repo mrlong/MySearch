@@ -98,7 +98,7 @@ module.exports = function(app){
           if (err) {
             return next(err);
           };
-          res.send({success:true,msg:'替换头像成功'});
+          res.send({success:true,msg:'更换头像成功'});
         });  
       });
     });
@@ -172,7 +172,7 @@ module.exports = function(app){
             if (err) {
               return next(err);
             };
-            res.send({success:true,msg:'替换头像成功'});
+            res.send({success:true,msg:'更换头像成功'});
           });  
         });
       });
