@@ -125,5 +125,14 @@ exports.format_date = function (date, friendly) {
 //
 exports.getFileExt = function(file){ 
   var d=/\.[^\.]+$/.exec(file); 
-  return d; 
+  return d[0]; 
 };
+
+//
+// 当前文件随意生成一个同扩展名的文件
+//
+exports.getSameFile=function(file){
+  var ext = exports.getFileExt(file);
+  var name = file.substring(0,file.length-ext.length);
+  return name + exports.randomString(6) + ext;
+}

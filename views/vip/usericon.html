@@ -4,9 +4,10 @@
   form{
     padding-top: 20px;
   }
-  #form_save,#btn_saves {
+  #form_save,#btn_saves,#imguser {
     display:none
   }
+  #imguser {display:none1;}
 </style>
 
 <script type="text/javascript">
@@ -33,12 +34,16 @@
               processData: false,  
               success:function(data,textStatus){ 
                 if (data.success==true){
-                  $("#imguser").attr('src',data.img);
+                  $("#imguser").attr('width',data.width);
+                  $("#imguser").attr('heigth',data.height);
+                  $("#imguser").attr('src',data.img+"?r="+Math.random());
                   $("#imguser").attr('path',data.imgpath);
+                  $('#imguser').show()
                   $("#imguser").ready(function(){
                     initJcrop(data);
                   });
                   $("#btn_saves").show();
+                  $("#flieupload").hide();
                 }
                 else{
                   alert(data.msg);
@@ -52,6 +57,12 @@
     
     //区域保存
     $("#btn_save_region").on('click',function(){
+      if($("#img_width").val()==0 || $("#img_height").val()==0)
+      {
+        alert('没有选择的区域。');
+        return false;
+      };
+
       $.post('/vip/save_usericonregion',{
         imgpath:$("#imguser").attr('path'),
         left:$("#img_left").val(),
@@ -97,6 +108,7 @@
         },function(){jcrop_api=this;});
     };
   };
+
   function showCoords(c){
     $('#img_left').val(c.x);
     $('#img_top').val(c.y);
@@ -120,7 +132,7 @@
           </tr>
         </table>
 
-      <img id="imguser" class="img-responsive" >
+      <img id="imguser" class="img-responsive" style='display:none;'>
       <p>
       <div class="form-group">
         <div id="btn_saves" >

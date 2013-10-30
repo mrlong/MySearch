@@ -66,10 +66,22 @@ module.exports = function(app){
               // Mg.Crop(new_path,[0,0,100,100],settings.publicdir+'/'+imgname,function(err){
               //   if (err) return console.log('img error');
               // });
-              res.send({success:true,img:'/img/user_icon/'+imgname,imgpath:new_path});
+              Mg.Info(new_path,function(err,Info){
+                if(err){
+                  res.send({success:false,msg:'获取图片信息异常出错。'}); 
+                }
+                else{
+                  var w = Info.width  > 640?640:Info.width;
+                  var h = Info.height > 480?480:Info.height;
+                  res.send({success:true,img:'/img/user_icon/'+imgname,imgpath:new_path,
+                    width:w,height:h});
+                };
+
+              });
+              
             }
         });  
-      }  
+      }//temp_path  
     }  
   }
 
@@ -151,33 +163,50 @@ module.exports = function(app){
       if (err || !user) {
         return next(err);
       };
-      var imgname=Util.randomString(10) + Util.getFileExt(data.imgpath);
-      var img = settings.publicdir+'/'+imgname;
-      Mg.Crop(data.imgpath,[parseInt(data.left),parseInt(data.top),
-        parseInt(data.width),parseInt(data.height)],img,function(err){
-        fs.unlinkSync(data.imgpath);
-        if (err) {
+      //var imgname=Util.randomString(10) + Util.getFileExt(data.imgpath);
+      //var img = settings.publicdir+'/'+imgname;
+      Mg.Info(data.imgpath,function(err,Info){
+        if(err){
           res.send({success:false,msg:'图片处理大小出错。'});
           return false;
         };
-        Filedb.removefile(user.icon);//删除原来的。
-        Filedb.writefile(img,function(err,data){
-          fs.unlinkSync(img);
-          if (err){
-            res.send({success:false,msg:'图片保存到库内出错。'});
+        var rx = Info.width > 640? Info.width/640:1;
+        var ry = Info.height> 480? Info.height/480:1;
+        console.log(rx);
+        console.log(ry);
+        Mg.Crop(data.imgpath,[parseInt(data.left)*rx,parseInt(data.top)*ry,
+          parseInt(data.width)*rx,parseInt(data.height)*ry],function(err,img){
+          fs.unlinkSync(data.imgpath);
+          if (err) {
+            res.send({success:false,msg:'图片处理大小出错。'});
             return false;
           };
-          user.icon = data._id;
-          user.save(function (err){
-            if (err) {
-              return next(err);
-            };
-            res.send({success:true,msg:'更换头像成功'});
-          });  
-        });
-      });
-    });
+          
+          Mg.Resize(img,parseInt(data.width),parseInt(data.height),function(err,newimg){
+            Filedb.removefile(user.icon);//删除原来的。
+            fs.unlinkSync(img);
+            Filedb.writefile(newimg,function(err,data){
+              fs.unlinkSync(newimg);
+              if (err){
+                res.send({success:false,msg:'图片保存到库内出错。'});
+                return false;
+              };
+              user.icon = data._id;
+              user.save(function (err){
+                if (err) {
+                  return next(err);
+                };
+                res.send({success:true,msg:'更换头像成功'});
+              });  
+            });
+          });//Resize
+   
+        });//Crop
+
+      }); //Info
+     });
   };
 
   //
+
 }
