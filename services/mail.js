@@ -49,10 +49,38 @@ exports.sendVerCodeMail=function(req,to,name,verCode,callback){
       '<a href="' + REGUSER_URL + '">进入页面完成注册</a>' + 
       '<p>' + 
       '<p>邮件是由系统自动发出，请不要直接回复邮件。</p>'
-  }
+  };
 
   sendMail(options,callback);
 };
+
+//
+// 发送密码到邮箱
+// pw 为新密码
+// mail 为发送的邮箱
+//
+exports.sendPasswdMail=function(req,pw,mail,callback){
+  var REGUSER_URL="";
+  if(req){
+    REGUSER_URL = req.protocol + '://' + req.host + (settings.port !== 80 ? ':' + settings.port : '');
+  };
+  var options={
+    from : settings.smtp_opts.auth.user,
+    to : mail,
+    subject: settings.title +'登录新密码。', 
+    html : '<p>您好：<p/>' +
+      '<p>您为系统随机生成的新密码：<b>' + pw + '</b></p>' + 
+      '<p>请牢记你的新密码！</p>' +
+      '<a href="' + REGUSER_URL + '">进入系统</a>' + 
+      '<p>' + 
+      '<p>邮件是由系统自动发出，请不要直接回复邮件。</p>'
+  };
+
+  sendMail(options,callback);
+};
+
+
+
 
 
 

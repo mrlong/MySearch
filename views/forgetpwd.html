@@ -1,0 +1,73 @@
+<%- include header.html %>
+<script type="text/javascript">
+  $(function(){
+    $("#revimg").attr('src','/fptpwd/getvercode?t=' + Math.random());
+    $("#reloadrevimg").on('click',function(){
+      $("#revimg").attr('src','/fptpwd/getvercode?t=' + Math.random());
+    });
+
+    $("form").validation();
+    $("button[type='submit']").on('click',function(event){
+
+      if ($("form").valid()==false){
+        $("#error-text").text("填写信息不完整。")
+        return false;
+      }
+
+    })
+  });  
+</script>
+
+<style type="text/css">
+  form{
+    padding-top: 20px;
+  }
+</style>
+
+<form class="form-horizontal" role="form" action="/fgtpwd" method="post">
+  <fieldset>
+    <legend>忘记密码</legend>
+    <!-- <span>请输入您注册的邮箱地址，系统将发送重置密码的链接到邮箱中</span> -->
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="mail" class="col-sm-2 control-label">电子邮箱</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="mail" name='mail' check-type="mail required">
+          </div>
+          <div class="col-sm-offset-2 col-sm-10">
+            <span class="help-block" style="color: #000000;padding-top: 10px;">请输入您注册的邮箱地址，系统将发送重置密码的链接到邮箱中.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="revcode" class="col-sm-2 control-label">验证码</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" id="vercode" name='vercode' check-type="required" data-toggle="tooltip" title="此处输入下图中的字符" data-placement="top">
+          </div>
+
+          <div class="col-sm-offset-2 col-sm-10">
+            <img src="" id="revimg"><a href="#" id="reloadrevimg">换另外一个图</a>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary col-sm-4">给我发重置密码</button>
+        </div>
+      </div>
+
+      </div>
+      <div class="col-md-4">
+        <div class="alert alert-info">
+          <h4>为什么收不到重置密码邮件？</h4>
+          <p>是否输入正确的邮箱地址(注册时使用的)</p>
+          <p>可能被邮件系统当成垃圾邮件，检查垃圾箱</p>
+          <p>可能是本站的邮件系统繁忙或者故障，请稍候再试或者联系管理员</p>
+        </div>
+      </div>
+    </div>
+  </fieldset>  
+</form>
+<%- include footer.html %>

@@ -8,7 +8,7 @@ var crypto = require('crypto');
 //
 exports.randomString=function(size) {
   size = size || 6;
-  var code_string = 'ABCDEFGHIJKL3MNO2PQRST1U9VWX8YZ7ab6cde5fghi4jklm0nopqrstuvwxyz';
+  var code_string = 'ABCDEFGHIJKL3MN2PQRST1U9VWX8YZ7ab6cde5fghi4jklm0npqrstuvwxyz';
   var max_num = code_string.length + 1;
   var new_pass = '';
   while (size > 0) {

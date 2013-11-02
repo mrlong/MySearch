@@ -1,11 +1,11 @@
 
-var User = require('../models/user');
-var Util = require('../services/util');
-var Obj  = require('../services/obj');
-var service_mail = require('../services/mail');
-var Settings=require('../settings');
+var 
+User = require('../models/user'),
+Util = require('../services/util'),
+Obj  = require('../services/obj'),
+service_mail = require('../services/mail'),
+Settings=require('../settings');
 
-//var Settings=require('../Settings');
 
 module.exports = function(app){
 
@@ -19,10 +19,6 @@ module.exports = function(app){
 		{
 			url:'/logout',
 			get:logout
-		},
-		{
-			url:'/fgtpwd',   //忘记密码
-			get:fgtpwd
 		},
 		{
 			url:'/reguser',
@@ -89,10 +85,7 @@ module.exports = function(app){
   	return res.send(Util.msgBox('您已安全退出。','/'));
 	}
 
-	//忘记密码
-	function fgtpwd(req,res,next){
-		//
-	}
+
 
 	//注册用户
 	function reguser(req,res,next){
