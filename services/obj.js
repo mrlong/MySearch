@@ -18,7 +18,7 @@ obj.prototype.xss=function(){
 
 obj.prototype.trim=function(){
   for (var key in this){
-    if(typeof(this[key])!='function'){
+    if(typeof(this[key])!='function' && this[key]){
       this[key] = this[key].trim();
     }
   };

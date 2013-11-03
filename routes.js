@@ -21,7 +21,7 @@ module.exports = function(app) {
     if (req.session.user) {
       req.session.user.name = 'mrlong';
       res.locals.user = req.session.user;
-
+      res.locals.path = "'" + req.path + "'";
       return next();
     }
     else{

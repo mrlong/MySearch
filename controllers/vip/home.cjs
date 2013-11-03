@@ -16,6 +16,10 @@ module.exports = function(app){
 			auth:true,
 			get:home
 		},
+		{ url:'/vip',
+			auth:true,
+			get:home
+		},
 		{
 			url:'/vip/usericon',
 			get:function(req,res,next){res.render('vip/usericon',{url:'/vip/home'});}

@@ -13,8 +13,15 @@ var userSchema=new Schema({
   regdate: {type:Date,default:Date.now},    //注册日期
   logincount:{type:Number, default: 0},  //登录次数
   lastlogin: {type:Date,default:Date.now}, //最后登录的时间
-  icon :{type:ObjectId}
+  icon :{type:ObjectId},
+  sex:{type:String,trim:true}, //=nam(男) =wonam(女)
+  province:{type:String,trim:true}, //省 
+  city:{type:String,trim:true}, //市
+  signature:{type:String,trim:true}, //个性签名
+  birthday:{type:String,trim:true}   //生日，格式 2012－01－02
+
 });
+
 db.model('user',userSchema); //user 是 mongodb内的control名
 
 var User=db.model('user');

@@ -1,0 +1,150 @@
+<%- include ./header-nav.html %>
+
+<script type="text/javascript">
+  $(function(){
+    $("#save").on('click',function(){
+      var data={
+        sex:$("#sex:checked").val(),
+        birthday:$("#birthday").val(),
+        province:$("#userProvince").val(),
+        city: $("#userCity").val(),
+        signature:$("#signature").val() 
+      };
+
+      $.post('/vip/profile',data,function(data,stauts){
+        if(stauts=='success'){
+          if (data.success==true){
+            $("#error-text").css('color',"#00f");
+            $("#error-text").text(data.msg); 
+          }
+          else{
+            $("#error-text").text(data.msg); 
+          }
+        }
+        else{
+          $("#error-text").text('提交到服务器上异常出错');
+        }
+      },'json');
+    });
+
+  })
+</script>
+
+<div class="panel panel-default">
+  <div class="panel-heading">会员基本信息</div>
+  <div class="panel-body">
+    <form class="form-horizontal" role="form" method="post">
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">登录账号：</label>
+        <div class="col-sm-6">
+          <p class="form-control-static"><%=locals.user.mail%></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputName" class="col-sm-2 control-label">眤称：</label>
+        <div class="col-sm-6">
+          <p class="form-control-static"><%=locals.user.name%></p>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="sex" class="col-sm-2 control-label">姓别：</label>
+        <div class="col-sm-1 radio">
+          <input type="radio" name="sex" id="sex" value="nam">男
+        </div>
+        <div class="col-sm-1 radio">
+          <input type="radio" name="sex" id="sex" value="wonam" >女
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label for="inputBirthday" class="col-sm-2 control-label">出生年月：</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="birthday" name="birthday" placeholder="格式：1988-01-23" value=<%=locals.user.birthday%>>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputarea" class="col-sm-2 control-label">居住地区：</label>
+        <div class="col-sm-3">
+          <select class="form-control" onchange="showcity(this.value, document.getElementById('userCity'));" name="province" id="userProvince" >
+            <option value=''>--请选择省份--</option>
+            <option value=北京>北京</option> 
+            <option value=上海>上海</option> 
+            <option value=广东>广东</option> 
+            <option value=江苏>江苏</option> 
+            <option value=浙江>浙江</option> 
+            <option value=重庆>重庆</option> 
+            <option value=安徽>安徽</option> 
+            <option value=福建>福建</option> 
+            <option value=甘肃>甘肃</option> 
+            <option value=广西>广西</option> 
+            <option value=贵州>贵州</option> 
+            <option value=海南>海南</option> 
+            <option value=河北>河北</option> 
+            <option value=黑龙江>黑龙江</option> 
+            <option value=河南>河南</option> 
+            <option value=湖北>湖北</option> 
+            <option value=湖南>湖南</option> 
+            <option value=江西>江西</option> 
+            <option value=吉林>吉林</option> 
+            <option value=辽宁>辽宁</option> 
+            <option value=内蒙古>内蒙古</option> 
+            <option value=宁夏>宁夏</option> 
+            <option value=青海>青海</option> 
+            <option value=山东>山东</option> 
+            <option value=山西>山西</option> 
+            <option value=陕西>陕西</option> 
+            <option value=四川>四川</option> 
+            <option value=天津>天津</option> 
+            <option value=新疆>新疆</option> 
+            <option value=西藏>西藏</option> 
+            <option value=云南>云南</option> 
+            <option value=香港>香港特别行政区</option> 
+            <option value=澳门>澳门特别行政区</option>
+            <option value=台湾>台湾</option> 
+            <option value=海外>海外</option>
+
+          </select>
+
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control" name="city" id="userCity"></select>
+          <script type="text/javascript" src="/js/getcity.js"></script>
+          <script type="text/javascript">
+            init_province_and_city(document.getElementById('userProvince'),'<%=locals.user.province%>',document.getElementById('userCity'),'<%=locals.user.city%>');
+            $(":radio[value='<%=locals.user.sex%>']").attr('checked',true);
+          </script>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="signature" class="col-sm-2 control-label">个性签名</br>(不超过100字)</label>
+        <div class="col-sm-8">
+          <textarea class="form-control" id="signature" name="signature" rows="3"><%=locals.user.signature%></textarea>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="button" class="btn btn-primary col-sm-4 " id="save">保存修改</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <span id="error-text" style="color: #FF0000;"></span>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+
+
+<%- include ./footer-nav.html %>

@@ -1,6 +1,6 @@
 body {
   padding-top: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
   color: #333333;
   font-size: 14px;
   line-height: 20px;
@@ -38,4 +38,13 @@ a {
 /*工具条高度*/
 .navbar{
   height: 49px;
+}
+
+/*表单左边的说明内容*/
+form .alert h5{
+  font-size:18px;
+}
+
+form .alert p{
+  font-size:12px;
 }

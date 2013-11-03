@@ -12,7 +12,6 @@ module.exports = function(app){
   this.route=[
     {
       url:'/fgtpwd',   //忘记密码
-      auth:true,
       get:function(req,res,next){res.render('forgetpwd',{url:'/login'});},
       post:function(req,res,next){
         var data= new Obj({
@@ -55,7 +54,6 @@ module.exports = function(app){
     ///////
     {
       url:'/fptpwd/getvercode',  //获取验证码
-      auth:true,
       get:function(req,res,next){
         var vercode = Util.randomString(6);
         req.session.fptpwd_vercode = vercode;
