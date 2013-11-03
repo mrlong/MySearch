@@ -68,7 +68,7 @@ module.exports = function(app) {
       files.forEach(function(item) {  
         var tmpPath = app.get("controllers") + '/' + item;
         debugger;
-        if (fs.statSync(tmpPath).isFile()){
+        if (fs.statSync(tmpPath).isFile() && tmpPath.indexOf('.cjs')>0){
           loadcontrollers(tmpPath);
         } //isFile()  
         //二级目录
@@ -77,7 +77,7 @@ module.exports = function(app) {
             if(!err){
               files.forEach(function(item) {
                 var tmpPath2 = tmpPath + '/' + item; 
-                if (fs.statSync(tmpPath2).isFile()){
+                if (fs.statSync(tmpPath2).isFile()&& tmpPath2.indexOf('.cjs')>0){
                   loadcontrollers(tmpPath2);
                 }
               })

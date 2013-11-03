@@ -16,6 +16,19 @@
           }
         },'json');
       };
+      if(obj.id=='name'){
+        var data = {name:$(obj).val()}
+        $.post("/verifyname",data,function(data,status){
+          if(status=='success'){
+            params.err = !data.success;
+            params.msg = data.msg; 
+          }
+          else{
+            params.err = true;
+            params.msg = '提交服务器异常出错。'+status;
+          }
+        },'json');
+      };
       if(obj.id=='vercode'){
         var data={
             mail:$("#mail").val(),

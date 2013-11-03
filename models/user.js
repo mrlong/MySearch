@@ -55,3 +55,7 @@ exports.getUserByMail=function(mail,callback){
 exports.getUserById=function(id,callback){
   User.findOne({_id: id}, callback);
 }
+
+exports.getUserByName=function(name,callback){
+  User.findOne({name: name}, callback);
+}
