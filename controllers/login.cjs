@@ -21,7 +21,6 @@ module.exports = function(app){
 			auth:true,
 			get:logout
 		},
-		
 
 	];
 
