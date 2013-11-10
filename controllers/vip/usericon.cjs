@@ -100,7 +100,7 @@ module.exports = function(app){
       var img=data.imgpath;
       Filedb.removefile(user.icon);//删除原来的。
       Filedb.writefile(img,function(err,data){
-        fs.unlinkSync(img);
+        fs.unlink(img);
         if (err){
           res.send({success:false,msg:'图片保存到库内出错。'});
           return false;
@@ -176,7 +176,7 @@ module.exports = function(app){
         console.log(ry);
         Mg.Crop(data.imgpath,[parseInt(data.left)*rx,parseInt(data.top)*ry,
           parseInt(data.width)*rx,parseInt(data.height)*ry],function(err,img){
-          fs.unlinkSync(data.imgpath);
+          fs.unlink(data.imgpath);
           if (err) {
             res.send({success:false,msg:'图片处理大小出错。'});
             return false;
@@ -184,9 +184,9 @@ module.exports = function(app){
           
           Mg.Resize(img,parseInt(data.width),parseInt(data.height),function(err,newimg){
             Filedb.removefile(user.icon);//删除原来的。
-            fs.unlinkSync(img);
+            fs.unlink(img);
             Filedb.writefile(newimg,function(err,data){
-              fs.unlinkSync(newimg);
+              fs.unlink(newimg);
               if (err){
                 res.send({success:false,msg:'图片保存到库内出错。'});
                 return false;

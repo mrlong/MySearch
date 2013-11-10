@@ -5,11 +5,11 @@
     $("form").validation();
     $("button[type='submit']").on('click',function(event){
       if ($("form").valid()==false){
-        $("#error-text").text("填写信息不完整。")
+        $(this).msgbox("填写信息不完整。",false);
         return false;
       };
       if($("#pw1").val() != $("#pw2").val()){
-        $("#error-text").text("新密码与确认密码不一致。")
+        $(this).msgbox("新密码与确认密码不一致。",false);
         return false;
       }
       //
@@ -24,59 +24,44 @@
 <div class="panel panel-default">
   <div class="panel-heading">修改密码</div>
   <div class="panel-body">
-<form class="form-horizontal"  action="/vip/chagpass" role="form" method="post">
-  <fieldset>
-  <div class="row">
-    <div class="col-md-9">
-   
-      <div class="form-group">
-        <label for="pw1" class="col-sm-3 control-label">原来密码</label>
-        <div class="col-sm-6">
-          <input type="password" class="form-control" id="pw" name='pass' check-type="required" minlength="6">
-        </div>
+    <form class="form-horizontal"  action="/vip/chagpass" role="form" method="post">
+    <div class="form-group">
+      <label for="pw1" class="col-sm-3 control-label">原来密码</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" id="pw" name='pass' check-type="required" minlength="6">
       </div>
+    </div>
 
-      <div class="form-group">
-        <label for="pw2" class="col-sm-3 control-label">新密码</label>
+    <div class="form-group">
+      <label for="pw2" class="col-sm-3 control-label">新密码</label>
         <div class="col-sm-6">
           <input type="password" class="form-control" id="pw1" name='pass1' check-type="required" minlength="6">
         </div>
-      </div>  
+    </div>  
 
-      <div class="form-group">
-        <label for="pw2" class="col-sm-3 control-label">确认新密码</label>
-        <div class="col-sm-6">
-          <input type="password" class="form-control" id="pw2" check-type="required" minlength="6">
-        </div>
-      </div>  
-
-
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button type="submit" class="btn btn-primary col-sm-4 ">修改密码</button>
-        </div>
+    <div class="form-group">
+      <label for="pw2" class="col-sm-3 control-label">确认新密码</label>
+      <div class="col-sm-6">
+        <input type="password" class="form-control" id="pw2" check-type="required" minlength="6">
       </div>
+    </div>  
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <span id="error-text" style="color: #FF0000;"></span>
-        </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary col-sm-4 ">修改密码</button>
       </div>
+    </div>
 
-    </div>
-    <div class="col-md-3">
-      <div class="alert alert-success">
-        <h5>如何使密码更安全？</h5>
-        <p>1.使用标点符号、数字和大小写字母的组合作为密码。</p>
-        <p>2.密码中勿包含个人信息（如姓名、生日等）。</p>
-        <p>3.不使用和其他网站相同的密码。</p>
-        <p>4.定期修改密码。</p>
-      </div> 
-    </div>
+    </form>
   </div>
-</fieldset>
-</form>
-</div>
+
+  <div class="panel-footer alert-info">
+    <h4>如何使密码更安全？</h4>
+    <p>1.使用标点符号、数字和大小写字母的组合作为密码。</p>
+    <p>2.密码中勿包含个人信息（如姓名、生日等）。</p>
+    <p>3.不使用和其他网站相同的密码。</p>
+    <p>4.定期修改密码。</p>
+  </div>  
 </div>
 
 

@@ -1,4 +1,4 @@
-<%- include ../header.html %>
+<%- include ./header-nav.html %>
 
 <style type="text/css">
   form{
@@ -50,8 +50,8 @@
                 };
               },
               error:function(){
-                alert('上传出错');
-              }  
+                $("#flieupload").msgbox('上传出错',false);
+               }  
       }); 
     });
     
@@ -70,10 +70,10 @@
         width:$("#img_width").val(),
         height:$("#img_height").val()},function(data,textStatus){
           if(textStatus=='success'){
-            alert(data.msg);
+            $("#btn_save_region").msgbox(data.msg,data.success);
           }
           else{
-            alert('保存失败');
+            $("#btn_save_region").msgbox('保存失败',false);
           }
         });
     });
@@ -82,10 +82,10 @@
     $("#btn_save_all").on('click',function(){
       $.post('/vip/save_usericon',{imgpath:$("#imguser").attr('path')},function(data,textStatus){
         if(textStatus=='success'){
-          alert(data.msg);
+          $("#btn_save_all").msgbox(data.msg,data.success);
         }
         else{
-          alert('保存失败');
+          $("#btn_save_all").msgbox('保存失败',false);
         }
       });
     });
@@ -119,44 +119,41 @@
 
 </script>
 
-<form >
-  <fieldset>
-  <legend class="pull-right">更换头像</legend>
-  <div class="row">
-    <div class="col-md-8">
-        <table width='100%' border="0">
-          <tr>
-          <th width='80'>图片文件：</th>   
-          <td><input type='file' name='files' id='file' size='30'/></td>
-          <td><input type="button" class="btn btn-primary" id="flieupload" value='上传'/></td>
-          </tr>
-        </table>
+<div class="panel panel-default">
+  <div class="panel-heading">更换头像</div>
 
-      <img id="imguser" class="img-responsive" style='display:none;'>
-      <p>
-      <div class="form-group">
-        <div id="btn_saves" >
-          <input type='hidden' id='img_left' name='left' value='10'/>
-          <input type='hidden' id='img_top' name='top' value='10'/>
-          <input type='hidden' id='img_width' name='width' value='200'/>
-          <input type='hidden' id='img_height' name='height' value='200'/>
-          <input type='button' value='保存选中区域' id='btn_save_region' class='btn btn-primary'/>
-          <input type='button' value='保存全图' id='btn_save_all' class='btn btn-primary'/> 选择“保存全图”头像可能会变形
-          <label id="range"></label>
-        </div>
+  <div class="panel-body">
+
+    <table width='100%' border="0">
+      <tr>
+        <th width='80'>图片文件：</th>   
+        <td><input type='file' name='files' id='file' size='30'/></td>
+        <td><input type="button" class="btn btn-primary" id="flieupload" value='上传'/></td>
+      </tr>
+    </table>
+
+    <img id="imguser" class="img-responsive" style='display:none;'>
+    <p>
+    <div class="form-group">
+      <div id="btn_saves" >
+        <input type='hidden' id='img_left' name='left' value='10'/>
+        <input type='hidden' id='img_top' name='top' value='10'/>
+        <input type='hidden' id='img_width' name='width' value='200'/>
+        <input type='hidden' id='img_height' name='height' value='200'/>
+        <input type='button' value='保存选中区域' id='btn_save_region' class='btn btn-primary'/>
+        <input type='button' value='保存全图' id='btn_save_all' class='btn btn-primary'/> 选择“保存全图”头像可能会变形
+        <label id="range"></label>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="alert alert-info">
-        <h4>如何更换头像？</h4>
-        <p>第1步：选择图片文件，尽量选择jpg,gif,png格式，大小不要太大。</p>
-        <p>第2步：点［上传］按钮，下方会显示你选择的图片。</p>
-        <p>第3步：图片的左下方有两个按钮：［保存选中区域］及［保存全图］。</p>
-        <p>第4步：根据你的需要点［保存选中区域］或［保存全图］。</p>
-      </div> 
-    </div>
-  </fieldset>
-</form>
+  </div>
+  <div class="panel-footer alert-info">
+    <h4>如何更换头像？</h4>
+      <p>第1步：选择图片文件，尽量选择jpg,gif,png格式，大小不要太大。</p>
+      <p>第2步：点［上传］按钮，下方会显示你选择的图片。</p>
+      <p>第3步：图片的左下方有两个按钮：［保存选中区域］及［保存全图］。</p>
+      <p>第4步：根据你的需要点［保存选中区域］或［保存全图］。</p>
+  </div>
+</div>
 
 <!-- <form id='form_save' action="/action/user/save_portrait" >
   <input type='hidden' id='img_left' name='left' value='0'/>
@@ -168,4 +165,5 @@
 
 <script type="text/javascript" src="/js/jquery.Jcrop.min.js" ></script>
 <link rel='stylesheet' href='/css/jquery.Jcrop.min.css'/>
-<%- include ../footer.html %>
+
+<%- include ./footer-nav.html %>

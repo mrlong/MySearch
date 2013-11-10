@@ -30,11 +30,16 @@ exports.writefile=function(filepath,callback){
       console.log(err);
       if(!err && gridStore){
         gridStore.writeFile(filepath,function(err,gridStore){
-          gridStore.close(function(err,result){
-            //console.log(result._id);
-            callback(err,result);
-            db.close();
-          });
+          if(!err && gridStore){
+            gridStore.close(function(err,result){
+              //console.log(result._id);
+              callback(err,result);
+              db.close();
+            });
+          }
+          else{
+            callback(err);
+          }
         });
       }
       else{
@@ -88,7 +93,7 @@ exports.removefile=function(id,callback){
     };
     var gridStore = new GridStore(connect,id,'r');
     gridStore.open(function(err,gridStore){
-      if(!err){
+      if(!err && gridStore){
         gridStore.unlink(function(err, result) {
           if(callback){callback(err,result);};
           db.close();

@@ -48,3 +48,9 @@ form .alert h5{
 form .alert p{
   font-size:12px;
 }
+.panel .panel-footer .alert-info h5{
+  font-size:18px;
+}
+.panel .panel-footer .alert-info p{
+  font-size:12px;
+}

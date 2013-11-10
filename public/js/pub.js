@@ -22,8 +22,9 @@
 
 
   //在提示成功，或失败窗口。
-  // $(".panel").msgbox(data.msg);
-  // $(".panel").msgbox(data.msg,false);
+  // save 为保存按钮。
+  // $("#save").msgbox(data.msg);
+  // $("#save").msgbox(data.msg,false);
   $.fn.msgbox=function(msg,success){
     var jpanel = $(this).parents('.panel');
 
@@ -43,21 +44,22 @@
       jtxt.addClass('alert-success');
       jtxt.find('span').addClass('glyphicon-ok');
       jtxt.find('span').after(' '+msg);
+      jpanel.removeClass('panel-default').addClass('panel-success');
     }
     else{
       jtxt.addClass('alert-danger');
       jtxt.find('span').addClass('glyphicon-remove');
       jtxt.find('span').after(' '+msg);
+      jpanel.removeClass('panel-default').addClass('panel-danger');
     };
     jpanel.after(jtxt);
 
     //启动定时关闭提示窗口
     setTimeout(function(){
       $("#yunzjmsgbox").remove();
+      jpanel.removeClass('panel-danger').removeClass('panel-success').addClass('panel-default');
     },2000);
   };  
-
-
  
   
 }(window.jQuery)
