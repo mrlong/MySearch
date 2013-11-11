@@ -68,6 +68,31 @@
 <!--   <iframe src="http://fast.wistia.net/embed/iframe/g1d312lbg8" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="940" height="534"></iframe> -->
 </div>
 
+<!-- 浏览器的版本 Modal -->
+<div class="modal fade" id="browser-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header alert-warning">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top:0;" title="关闭提示框">&times;</button>
+      <span id="baModalLabel"><strong><font color="red">警告：</font></strong>您的浏览器&nbsp;<i class="icon-globe"></i>&nbsp;版本</span>
 
-	
+      </div>
+      <div class="modal-body">
+        <div class="row-fluid">
+          <p>为了更好的浏览和使用，我们建议您使用<a href="http://www.google.cn/intl/zh-CN/chrome/browser/"><span  class="modal-title" >Chrome</span></a>、<a href="http://www.firefox.com.cn/"><span  class="modal-title" >Firefox</span></a>，或升级到<span style="font-size:16px;color:blue;font-weight:bold;">IE8</span>以上版本！若您使用360、搜狗、QQ、傲游等其他浏览器，建议使用其最新版本。</p>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--[if lt IE 8]>
+  <script type="text/javascript">$('#browser-alert').modal('show');</script>
+<![endif]-->
+
+
+<a href="#browser-alert" role="button" class="btn" data-toggle="modal">查看演示案例</a>
+
+
+
 <%- include footer.html %>
