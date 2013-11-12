@@ -15,19 +15,19 @@ module.exports = function(app){
       get:function(req,res,next){res.render('forgetpwd',{url:'/login'});},
       post:function(req,res,next){
         var data= new Obj({
-          mail:req.param('mail').toLowerCase(),
+          qq:req.param('qq').toLowerCase(),
           vercode:req.param('vercode').toLowerCase()
         });
         data.trim().xss();
 
         if (req.session.fptpwd_vercode && data.vercode==req.session.fptpwd_vercode.toLowerCase()){
-          User.getUserByMail(data.mail,function(err,user){
+          User.getUserByQQ(data.qq,function(err,user){
             if(!err&&user){
               var passwd = Util.randomString(6);
               user.pass = Util.md5(passwd);
               user.save(function(err){
                 if(!err){
-                  Mail.sendPasswdMail(req,passwd,data.mail,function(err){
+                  Mail.sendPasswdMail(req,passwd,data.qq+'@qq.com',function(err){
                     if(!err){
                       res.send(Util.errBox('已新密码发达到你邮箱。','/login'));
                     }

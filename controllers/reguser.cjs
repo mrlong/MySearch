@@ -22,12 +22,12 @@ module.exports = function(app){
       post:createuser
     },
     {
-      url:'/reguser/:mail/:name/:vercode',
+      url:'/reguser/:qq/:name/:vercode',
       get:reguser
     },
     {
-      url:'/verifymail',   //校验邮箱
-      post:verifymail
+      url:'/verifyqq',   //校验邮箱
+      post:verifyqq
     },
     {
       url:'/verifyname',   //校验用户名
@@ -47,7 +47,7 @@ module.exports = function(app){
   //注册用户
   function reguser(req,res,next){
     var data= new Obj({
-      mail:req.param('mail')||'',
+      qq:req.param('qq')||'',
       name:req.param('name')||'',
       vercode:req.param('vercode')||''
     });
@@ -62,26 +62,26 @@ module.exports = function(app){
   //创建用户并写入到库内
   function createuser(req,res,next){
     var data= new Obj({
-      mail    : req.param('mail').toLowerCase(),
+      qq    : req.param('qq').toLowerCase(),
       name    : req.param('name'),
       pass    : req.param('pass'),
       vercode : req.param('vercode'),
     });
     data.trim().xss();
     data.pass = Util.md5(data.pass); //MD5写入库。
-    if (!req.session.vercode || !req.session.vercode.mail ){
+    if (!req.session.vercode || !req.session.vercode.qq ){
       res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
     }
     else{
-      if (req.session.vercode.mail != data.mail || req.session.vercode.vercode != data.vercode){
+      if (req.session.vercode.qq != data.qq || req.session.vercode.vercode != data.vercode){
         res.send(Util.errBox('无效的验证码，注册失败！','/reguser'));
       };
     };
 
     //检查邮箱与用户名是否存在
-    User.getUserByMail(data.mail,function(err,user){
+    User.getUserByQQ(data.qq,function(err,user){
       if (!err && user){
-        res.send(Util.errBox('注册邮箱已存，不能注册！','/reguser'));
+        res.send(Util.errBox('注册的QQ号已存，不能注册！','/reguser'));
         return false;
       }
     });
@@ -106,20 +106,20 @@ module.exports = function(app){
   };
 
   //检验邮箱
-  function verifymail(req,res,next){  
-    var mail = req.body.mail;
-    User.userFind(mail,function(err,doc){
+  function verifyqq(req,res,next){  
+    var qq = req.body.qq;
+    User.userFind(qq,function(err,doc){
       var data={};
       console.log(err);
       if(err==false){
         console.log('y');
         data.success = true;
-        data.msg = "邮箱有效。";
+        data.msg = "QQ号有效。";
       }
       else{
         console.log('x');
         data.success = false;
-        data.msg = "邮箱已注册过了，不能再注册。";
+        data.msg = "QQ号已注册过了，不能再注册。";
       };
       res.json(200,data);
     });
@@ -149,22 +149,22 @@ module.exports = function(app){
   //获取验证码
   function getvercode(req,res,next){
     var data= new Obj({
-      mail:req.param('mail'),
+      qq:req.param('qq'),
       name:req.param('name'),
       style:req.param('style')
     });
     data.trim().xss();
-    if (req.session.vercode && req.session.vercode.mail==data.mail){
+    if (req.session.vercode && req.session.vercode.qq==data.qq){
       var myvercode = req.session.vercode.vercode; //采用原来的，因为用户如多次点了获取这样就同一个了。
     } 
     else{ 
       var myvercode = Util.randomString();
-      req.session.vercode = {mail:data.mail,
+      req.session.vercode = {qq:data.qq,
         vercode:myvercode,style:data.style};
     };
-    service_mail.sendVerCodeMail(req,data.mail,data.name,myvercode,function(err){
+    service_mail.sendVerCodeMail(req,data.qq,data.name,myvercode,function(err){
       if (!err){
-        res.json(200,{success:true,msg:'验证码已发送到你的邮箱内。'});   
+        res.json(200,{success:true,msg:'验证码已发送到你的QQ邮箱内。'});   
       }
       else{
         res.json(200,{success:false,msg:'发送邮件异常出错，请联系客服。'});
@@ -176,12 +176,12 @@ module.exports = function(app){
   function verifyvercode(req,res,next){
     var data = new Obj({
       style : req.param('style'),
-      mail : req.param('mail'),
+      qq : req.param('qq'),
       vercode : req.param('vercode')
     });
     data.trim().xss();
     if (req.session.vercode){
-      if (req.session.vercode.mail==data.mail && req.session.vercode.style==data.style && 
+      if (req.session.vercode.qq==data.qq && req.session.vercode.style==data.style && 
           req.session.vercode.vercode==data.vercode){
         res.send({success:true,msg:'验证码有效。'});
       }

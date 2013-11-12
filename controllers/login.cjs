@@ -28,13 +28,13 @@ module.exports = function(app){
 	//登录提交
 	function login(req,res,next){
 		var data= new Obj({
-			mail:req.param('mail').toLowerCase(),
+			qq:req.param('qq').toLowerCase(),
 			pass:req.param('pass')
 		});		
 		data.trim().xss();
 		data.pass = Util.md5(data.pass);
  		
- 		User.getUserByMail(data.mail,function(err,user){
+ 		User.getUserByQQ(data.qq,function(err,user){
  			if(err){
  				return next(err);		
  			};
@@ -50,7 +50,7 @@ module.exports = function(app){
     	var auth_token = Util.encrypt(user.id + '\t' + 
     		user.name + '\t' + 
     		user.pass + '\t' + 
-    		user.mail, Settings.sessionSecret);
+    		user.qq, Settings.sessionSecret);
     	console.log(auth_token);
   		res.cookie(Settings.cookieSecret,auth_token,{path:'/',maxAge: 1000 * 60 * 60 * 24 * 30});//30天
     	return res.send(Util.msgBox('登录成功。','/'));

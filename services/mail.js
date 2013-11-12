@@ -37,11 +37,11 @@ var sendMail = function (data,callback) {
  */
 exports.sendVerCodeMail=function(req,to,name,verCode,callback){
   var REGUSER_URL = req.protocol + '://' + req.host + (settings.port !== 80 ? ':' + settings.port : '')+
-      '/reguser?mail='+ to +'&name=' + name + '&vercode=' + verCode ;
+      '/reguser?qq='+ to +'&name=' + name + '&vercode=' + verCode ;
   console.log(REGUSER_URL);
   var options={
     from : settings.smtp_opts.auth.user,
-    to : to,
+    to : to+'@qq.com',
     subject: settings.title +'注册验证码', 
     html : '<p>您好：<p/>' +
       '<p>您的注册验证码为：<b>' + verCode + '</b></p>' + 

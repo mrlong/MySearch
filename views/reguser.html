@@ -3,9 +3,9 @@
 <script type="text/javascript">
   $(function(){
     $("form").validation(function(obj,params){
-      if (obj.id=='mail'){
-        var data={mail:$(obj).val()}
-        $.post("/verifymail",data,function(data,status){
+      if (obj.id=='qq'){
+        var data={qq:$(obj).val()}
+        $.post("/verifyqq",data,function(data,status){
           if(status == 'success'){
             params.err = !data.success;
             params.msg = data.msg; 
@@ -31,7 +31,7 @@
       };
       if(obj.id=='vercode'){
         var data={
-            mail:$("#mail").val(),
+            qq:$("#qq").val(),
             vercode:$(obj).val(),
             style:'reguser'
         };
@@ -76,15 +76,15 @@
       var jthis = $(this);
       var jparent = jthis.parent();
       jparent.find('small').remove();
-      jthis.after('<small>正在请求中...</smaill>');
+      jthis.after('<small>正在请求中...</small>');
       var data ={
-        mail  : $("#mail").val(),
+        qq  : $("#qq").val(),
         name  : $("#name").val(),
         style : 'reguser'
       };
       $.post('/getvercode',data,function(data,status){
         if(status=='success' && data.success==true){
-          jparent.find('small').text("已将验证码发送到你的邮箱内。");
+          jparent.find('small').text(data.msg);
           jparent.find('small').addClass('fontblue');
         }
         else{
@@ -110,9 +110,9 @@
     <div class="col-md-8">
       
       <div class="form-group">
-        <label for="mail" class="col-sm-2 control-label">Email</label>
+        <label for="qq" class="col-sm-2 control-label">QQ</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" id="mail" name='mail' placeholder="xxxx@qq.com" check-type="mail required" value="<%=data.mail%>">
+          <input type="text" class="form-control" id="qq" name='qq' placeholder="xxxx@qq.com" check-type="number required" value="<%=data.qq%>">
         </div>
         <div class="col-sm-offset-2 col-sm-10">
           <span class="help-block" style="color: #000000;padding-top: 10px;">请填写真实的邮箱，在注册之前会将验证码发送到你的邮箱内.</span>

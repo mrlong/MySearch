@@ -19,7 +19,7 @@ module.exports = function(app) {
   //全局参数，用于认引擎加入
   var resbefore=function(req,res,next){
     if (req.session.user) {
-      req.session.user.name = 'mrlong';
+      //req.session.user.name = 'mrlong';
       res.locals.user = req.session.user;
       res.locals.path = "'" + req.path + "'";
       return next();
@@ -38,7 +38,7 @@ module.exports = function(app) {
           user.lastlogin = Date.now();
           user.save();
           req.session.user = user;
-          req.session.user.name = 'mrlong'
+          //req.session.user.name = 'mrlong'
           res.locals.user = user;
 
           return next();
