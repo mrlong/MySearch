@@ -1,0 +1,91 @@
+<%- include ./header-nav.html %>
+<script type="text/javascript">
+  $(function(){
+    $(".list-group li.selected").removeClass('selected');
+    $("#nav-vip a[href='/vip/profile']").parent().addClass('selected');
+
+    $("form").validation();
+
+    $("#save").on('click',function(){
+      
+      if ($("form").valid()==false){
+        $("#save").msgbox("填写信息不完整。",false);
+        return false;
+      }
+
+      var data={
+        openphone:$("#openphone:checked").val()=='on'?true:false,
+        phone:$("#phone").val(),
+        tel:$("#tel").val() 
+      };
+
+      $.post('/vip/contact',data,function(data,stauts){
+        if(stauts=='success'){
+          if (data.success==true){
+            $("#save").msgbox(data.msg);
+          }
+          else{
+            $("#save").msgbox(data.msg);
+          }
+        }
+        else{
+          $("#save").msgbox('提交到服务器上异常出错',false);
+        }
+      },'json');
+    });
+
+  })
+
+</script>
+
+<div class="panel panel-default">
+  <!-- <div class="panel-heading"> -->
+    <ul class="nav nav-tabs">
+      <li><a href="/vip/profile">会员基本信息</a></li>
+      <li class="active"><a href="/vip/contact" >联系信息</a></li>
+      <li><a href="/vip/skill" >职业技能</a></li>
+    </ul>
+  <!-- </div> -->
+
+  <div class="panel-body">
+    <form class="form-horizontal" role="form" method="post">
+      <div class="form-group">
+        <label for="phone" class="col-sm-2 control-label">手机</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="phone" name="phone" placeholder="格式：13857121269" value=<%=locals.user.contact.phone%> check-type="number">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tel" class="col-sm-2 control-label">座机</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="tel" name="tel" placeholder="格式：0571-56751008" value=<%=locals.user.contact.tel%>>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="openphone" name="openphone" 
+              <%if(locals.user.contact.openphone==true){%>
+              checked
+              <%}%>> 对外公开
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="button" class="btn btn-primary col-sm-4 " id="save">保存修改</button>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+<%- include ./footer-nav.html %>

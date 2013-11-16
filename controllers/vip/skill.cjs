@@ -18,6 +18,36 @@ module.exports = function(app){
 
 
   function skill(req,res,next){
+    var data = new Obj({
+      job:req.param('job')||'',
+      work_years:req.param('work_years'),
+      job_status:req.param('job_status'),
+      major:req.param('major'),
+      majorother:req.param('majorother')
+    });
+    data.trim().xss();
+
+    User.getUserById(req.session.user._id, function (err, user){
+      if(!err && user){
+        user.skill.job = parseInt(data.job);
+        user.skill.work_years = parseInt(data.work_years);
+        user.skill.job_status = parseInt(data.job_status);
+        user.skill.major = data.major.split(',');
+        user.skill.majorother  = data.majorother;
+        user.save(function(err){
+          if(!err){
+            req.session.user=user;
+            res.json(200,{success:true,msg:'职业技能保存成功。'});
+          }
+          else{
+            res.json(200,{success:false,msg:'职业技能保存出错。'});
+          }
+        });
+      }
+      else{
+        res.json(200,{success:false,msg:'读取用户信息出错，无法保存。'});
+      };
+    });
 
   };
 

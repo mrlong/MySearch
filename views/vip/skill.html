@@ -3,6 +3,47 @@
   $(function(){
     $(".list-group li.selected").removeClass('selected');
     $("#nav-vip a[href='/vip/profile']").parent().addClass('selected');
+
+    $("#major99").on('change',function(){
+      this.checked==true?$("#othermajor").removeClass("hide"):$("#othermajor").addClass("hide");
+    });
+
+    $("#save").on('click',function(){
+      var jmajor='';
+      $(".major").each(function(index, val) {
+        if(this.checked){
+          if(jmajor==''){
+            jmajor = $(this).attr('value');
+          }
+          else{
+            jmajor = jmajor + ',' + $(this).attr('value');
+          };
+        };
+      });    
+
+      var data={
+        job:$("#job").val(),
+        work_years:$("#work_years").val(),
+        job_status:$("#job_status:checked").val(),
+        major:jmajor,
+        majorother:$("#other").val()
+      };
+
+      $.post('/vip/skill',data,function(data,stauts){
+        if(stauts=='success'){
+          if (data.success==true){
+            $("#save").msgbox(data.msg);
+          }
+          else{
+            $("#save").msgbox(data.msg);
+          }
+        }
+        else{
+          $("#save").msgbox('提交到服务器上异常出错',false);
+        }
+      },'json');
+    });
+
   });
 </script>
 
@@ -10,12 +51,134 @@
   <!-- <div class="panel-heading"> -->
     <ul class="nav nav-tabs">
       <li><a href="/vip/profile">会员基本信息</a></li>
+      <li ><a href="/vip/contact" >联系信息</a></li>
       <li class="active"><a href="/vip/skill" >职业技能</a></li>
     </ul>
   <!-- </div> -->
 
   <div class="panel-body">
-    
+    <form class="form-horizontal" role="form" method="post">
+      <div class="form-group">
+        <label for="job" class="col-sm-2 control-label">我是一名</label>
+        <div class="col-sm-6">
+          <select class="form-control" name="job" id="job" >
+            <option value=''>--请选择职业--</option>
+            <option value='1'>造价师</option> 
+            <option value='2'>资料员</option> 
+            <option value='3'>项目经理</option> 
+          </select>
+          <script type="text/javascript">
+            $(function(){
+              $("#job > option[value='"+ <%=locals.user.skill.job%> +"']").attr('selected','');
+            });
+          </script>
+
+        </div>
+      </div>
+
+      <!-- 工作年限 -->
+      <div class="form-group">
+        <label for="work_years" class="col-sm-2 control-label">工作年限</label>
+        <div class="col-sm-6">
+          <select class="form-control" name="work_years" id="work_years" >
+            <option value="-1" selected>在读学生</option>
+            <option value="0">应届毕业生</option>
+            <option value="1">1年以上</option>
+            <option value="2">2年以上</option>
+            <option value="3">3年以上</option>
+            <option value="5">5年以上</option>
+            <option value="10">10年以上</option>
+          </select>
+          <script type="text/javascript">
+            $(function(){
+              $("#work_years > option[value='"+ <%=locals.user.skill.work_years%> +"']").attr('selected','');
+            });
+          </script>
+        </div>
+      </div>
+
+      <!-- 目前状态 -->
+      <div class="form-group">
+        <label for="job_status" class="col-sm-2 control-label">目前状态</label>
+        <div class="col-sm-6">
+          <label class="radio-inline">
+            <input type="radio" name="job_status" id="job_status" value="0" >在职
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="job_status" id="job_status" value="1" >学生
+          </label>  
+          <label class="radio-inline">
+            <input type="radio" name="job_status" id="job_status" value="2" >找工作中...
+          </label>
+
+          <script type="text/javascript">
+            $(function(){
+              $("#job_status[value='"+ <%=locals.user.skill.job_status%> +"']").attr('checked','');
+            });
+          </script>
+        </div>
+      </div>
+
+      <!-- 专业 -->
+      <div class="form-group">
+        <label for="major" class="col-sm-2 control-label">你的专业</label>
+        <div class="col-sm-6">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major1" value="土建" class="major"> 土建
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major2" value="装饰" class="major"> 装饰
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major3" value="市政" class="major"> 市政
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major4" value="园林" class="major"> 园林
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major5" value="路桥" class="major"> 路桥
+          </label>
+        </div>  
+
+        <div class="col-sm-offset-2 col-sm-6">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major1" value="水利" class="major"> 水利
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major2" value="公路" class="major"> 公路
+          </label>
+        </div>  
+
+        <div class="col-sm-offset-2 col-sm-6">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="major99" value="其他" class="major"> 其他
+          </label>
+          <label class="checkbox-inline hide" id="othermajor">
+            <input type="text" id="other" class="form-control" placeholder="输入其他专业名称" value=<%=locals.user.skill.majorother%>>
+          </label>
+        </div>
+        <script type="text/javascript">
+          $(function(){
+            <% for(var i=0; i<locals.user.skill.major.length; i++) {%>
+              $(".major[value='<%=locals.user.skill.major[i]%>']").attr('checked', '');
+              if($("#major99").val()=='<%=locals.user.skill.major[i]%>'){
+                $("#othermajor").removeClass('hide');
+              };
+            <% } %>
+            
+          });
+        </script>
+      </div>
+
+
+      <!-- 确定 -->
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="button" class="btn btn-primary col-sm-4 " id="save">保存修改</button>
+        </div>
+      </div>
+
+    </form>   
 
   </div>
 </div>
