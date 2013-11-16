@@ -1,0 +1,23 @@
+<%- include ./header-nav.html %>
+<script type="text/javascript">
+  $(function(){
+    $(".list-group li.selected").removeClass('selected');
+    $("#nav-vip a[href='/vip/profile']").parent().addClass('selected');
+  });
+</script>
+
+<div class="panel panel-default">
+  <!-- <div class="panel-heading"> -->
+    <ul class="nav nav-tabs">
+      <li><a href="/vip/profile">会员基本信息</a></li>
+      <li class="active"><a href="/vip/skill" >职业技能</a></li>
+    </ul>
+  <!-- </div> -->
+
+  <div class="panel-body">
+    
+
+  </div>
+</div>
+
+<%- include ./footer-nav.html %>

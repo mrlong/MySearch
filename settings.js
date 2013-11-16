@@ -5,7 +5,7 @@
 
 module.exports = { 
   debug: false,
-  title: 'mySearch',
+  title: 'yunzj',
   port : 3000,             //web服务端口
   sessionSecret: 'myblog', //session 串加密key
   cookieSecret:  'myblog', 

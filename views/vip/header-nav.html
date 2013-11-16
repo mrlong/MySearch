@@ -2,9 +2,10 @@
 <script type="text/javascript">
   $(function(){
     $(".list-group li.selected").removeClass('selected');
-    $("a[href='" + <%=locals.path%> +"']").parent().addClass('selected');
+    $("#nav-vip a[href='" + <%=locals.path%> +"']").parent().addClass('selected');
   });
 </script>
+
 <style type="text/css">
   ul li a{color:#666}
   ul li.selected a {color:#00f}
@@ -18,11 +19,11 @@
     <div class="panel-heading"><a href="/vip"><span class="glyphicon glyphicon-home"></span>用户中心</a></div>
     <!-- <div class="panel-body">
     </div> -->
-    <ul class="list-group" sytle="">
-      <li class="list-group-item"><a href="#"><span class="badge pull-right">42</span><span class="glyphicon glyphicon-volume-up"></span>信息</a></li>
-      <li class="list-group-item selected"><a href="/vip/chagpass"><span class="glyphicon glyphicon-star"></span>修改密码</a></li>
-      <li class="list-group-item"><a href="/vip/profile"><span class="glyphicon glyphicon-pencil"></span>修改个人资料</a></li>
-      <li class="list-group-item"><a href="/vip/usericon"><span class="glyphicon glyphicon-picture"></span>更换头像</a></li>
+    <ul class="list-group" id="nav-vip">
+      <li class="list-group-item"><a href="/vip/inbox"><span class="badge pull-right ">42</span><span class="glyphicon glyphicon-volume-up"></span>站内留言</a></li>
+      <li class="list-group-item selected"><a href="/vip/chagpass"><span class="glyphicon glyphicon-star"></span> 修改密码</a></li>
+      <li class="list-group-item"><a href="/vip/profile"><span class="glyphicon glyphicon-pencil"></span> 修改个人资料</a></li>
+      <li class="list-group-item"><a href="/vip/usericon"><span class="glyphicon glyphicon-picture"></span> 更换头像</a></li>
     </ul>
   </div>
 </div>
