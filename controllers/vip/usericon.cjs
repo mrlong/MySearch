@@ -1,6 +1,7 @@
 
 var 
 User = require('../../models/user'),
+Msg  = require('../../models/msg'),
 Util = require('../../services/util'),
 fs=require('fs'),
 settings = require('../../settings'),
@@ -12,6 +13,19 @@ Filedb=require('../../services/filedb');
 //用户登录
 module.exports = function(app){
   this.route=[
+    {
+      url:'/vip/usericon',
+      get:function(req,res,next){
+        var msgcount = 0;
+        Msg.msgCountByUserId(res.locals.user._id,function(err,count){
+          if(!err){
+            msgcount = count; 
+          }     
+        });
+        res.render('vip/usericon',{url:'/vip/home',msgcount:msgcount});
+      }
+    },
+
     {
       url:'/vip/upload_usericon',  //上传原始图片
       auth:true,

@@ -1,10 +1,13 @@
+// 
+// 用户中心的主页
+// 
+// 
 
 var 
 User = require('../../models/user'),
 Util = require('../../services/util'),
-fs=require('fs'),
+Msg  = require('../../models/msg'),
 settings = require('../../settings'),
-Mg = require('../../services/gm'),
 Obj  = require('../../services/obj'),
 Filedb=require('../../services/filedb');
 
@@ -19,17 +22,19 @@ module.exports = function(app){
 		{ url:'/vip',
 			auth:true,
 			get:home
-		},
-		{
-			url:'/vip/usericon',
-			get:function(req,res,next){res.render('vip/usericon',{url:'/vip/home'});}
-		},
+		}		
 		
 	];
 
 	function home(req,res,next){
     res.locals.user.regdate2 = Util.format_date(new Date(res.locals.user.regdate),true);
     res.locals.user.lastlogin2 = Util.format_date(new Date(res.locals.user.lastlogin),true);
-		res.render('vip/home', {url:'/vip/home'});
+ 		var msgcount = 0;
+ 		Msg.msgCountByUserId(res.locals.user._id,function(err,count){
+ 			if(!err){
+ 				msgcount = count; 
+ 			}			
+ 		});  	 
+    res.render('vip/home', {url:'/vip/home',msgcount:msgcount});
 	}
 }

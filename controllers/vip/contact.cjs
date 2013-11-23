@@ -1,5 +1,11 @@
+// 
+// 个人资料的联系方式 
+// 
+// 
+
 var 
 User = require('../../models/user'),
+Msg  = require('../../models/msg'),
 Util = require('../../services/util'),
 settings = require('../../settings'),
 Obj  = require('../../services/obj');
@@ -10,7 +16,15 @@ module.exports = function(app){
     {
       url:'/vip/contact',
       auth:true, 
-      get:function(req,res,next){res.render('vip/contact',{url:'/vip/home'});},
+      get:function(req,res,next){
+        var msgcount = 0;
+        Msg.msgCountByUserId(res.locals.user._id,function(err,count){
+          if(!err){
+            msgcount = count; 
+          }     
+        });
+        res.render('vip/contact',{url:'/vip/home',msgcount:msgcount});
+      },
       post:contact
     }
     

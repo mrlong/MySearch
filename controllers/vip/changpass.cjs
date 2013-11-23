@@ -1,5 +1,10 @@
+// 
+// 修改密码
+// 
+
 var 
 User = require('../../models/user'),
+Msg  = require('../../models/msg'),
 Util = require('../../services/util'),
 fs=require('fs'),
 settings = require('../../settings'),
@@ -13,7 +18,16 @@ module.exports = function(app){
     {
       url:'/vip/chagpass',
       auth:true, 
-      get:function(req,res,next){res.render('vip/chagpass',{url:'/vip/home'});},
+      get:function(req,res,next){
+        var msgcount = 0;
+        Msg.msgCountByUserId(res.locals.user._id,function(err,count){
+          if(!err){
+          msgcount = count+1; 
+          }     
+        }); 
+
+        res.render('vip/chagpass',{url:'/vip/home',msgcount:msgcount});
+      },
       post:changepass
     },
     

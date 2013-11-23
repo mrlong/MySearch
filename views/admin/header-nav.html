@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="外贸 软件 搜索 邮件 mail">
+    <meta name="author" content="mrlong.com@gmail.com">
+    <title><%=settings.title%></title>
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js" ></script>
+    <script type="text/javascript" src="/js/bootstrap/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/js/bootstrap/css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="/js/bootstrap3-validation.js"></script>
+    <script type="text/javascript" src="/js/pub.js"></script>
+    <link rel='stylesheet' href='/css/style.css' />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <link href="/css/bootstrap-ie78.css" rel="stylesheet" type="text/css" />
+    <script src="/js/respond.min.js" type="text/javascript"></script> 
+    <script src="/js/html5.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+
+<body>
+<div class="container">
+
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container"> 
+        
+      <div class="navbar-header">
+        <a class="navbar-brand navbar-title" href="/admin/home" style="color:#0088CC;">后台管理中心</a>
+      </div>
+        
+      <div class="collapse navbar-collapse navbar-ex9-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="＃">统计</a></li>
+          <li><a href="＃">审核</a></li>
+          <li><a href="＃">客户服务</a></li>
+        </ul>
+
+        <%if(locals.user){%>
+          <p class="navbar-text pull-right"><img id="navimg" style="width: 20px;height:20px;" src="/vip/getusericon" class="img-rounded"> <%=locals.user.name%>! <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span></p>
+        <%}%>
+
+      </div>
+      
+    </div> 
+  </nav>
+<div class="main box" style="padding-top: 20px;">
+
+
+

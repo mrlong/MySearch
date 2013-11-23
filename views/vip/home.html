@@ -40,6 +40,11 @@
       <div class="panel-body" style="height: 150px;">
         <a href="/vip/chagpass">修改密码</a>
         <a href="/vip/profile">修改个人资料</a>
+        <a href="/vip/inbox">站内信息
+          <% if(msgcount>0){ %>
+            <span class="badge pull-right "><%=msgcount%></span>
+          <%}%>
+        </a>
       </div>
     </div>
   </div>
