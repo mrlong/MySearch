@@ -80,6 +80,20 @@ module.exports = function(app) {
                 if (fs.statSync(tmpPath2).isFile()&& tmpPath2.indexOf('.cjs')>0){
                   loadcontrollers(tmpPath2);
                 }
+                //三级目录
+                else{
+                  fs.readdir(tmpPath2,function(err,files){
+                    if(!err){
+                      files.forEach(function(item){
+                        var tmpPath3 = tmpPath2 + '/' + item;
+                        if(fs.statSync(tmpPath3).isFile()&& tmpPath3.indexOf('.cjs')>0){
+                          loadcontrollers(tmpPath3);
+                        };
+                      });
+                    };
+                  });
+                };
+                //end 三级目录
               })
             }
           });

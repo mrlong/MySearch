@@ -21,6 +21,13 @@
     <![endif]-->
   </head>
 
+<script type="text/javascript">
+  $(function(){
+    $(".navbar-nav li[class='active']").removeClass('active');
+    $(".navbar-nav li a[href='<%=url%>']").parent().addClass('active');    
+  });
+</script>
+
 <body>
 <div class="container">
 
@@ -33,8 +40,9 @@
         
       <div class="collapse navbar-collapse navbar-ex9-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="＃">统计</a></li>
-          <li><a href="＃">审核</a></li>
+          <li class="active"><a href="/admin">起始页</a></li>
+          <li><a href="/admin/fina">财务</a></li>
+          <li><a href="＃">产品维护</a></li>
           <li><a href="＃">客户服务</a></li>
         </ul>
 

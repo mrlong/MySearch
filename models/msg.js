@@ -5,13 +5,14 @@
 //发信息的内容。
 //谁发出的。
 
-var db=require('./db');
-var Schema=require('mongoose').Schema;
-var ObjectId = Schema.Types.ObjectId;
+var 
+db=require('./db'),
+Schema=require('mongoose').Schema,
+ObjectId = Schema.Types.ObjectId;
 
 var msgSchema=new Schema({
-  senduser_id : {type:ObjectId},      //谁发的信息
-  touser_id   : {type:ObjectId},      //发给谁的
+  senduser_id : {type:ObjectId,index: true},      //谁发的信息
+  touser_id   : {type:ObjectId},                  //发给谁的
   isreaded    : {type:Boolean,default:false}, //=true 表示已读了。
   content     : {type:String},                //发送的内容
   source      : {type:Number,default:0},      //=0系统信息，1＝小组信息，2＝个人信息
@@ -46,6 +47,6 @@ exports.msgCountByUserId=function(Id,callback){
  */
 exports.getMessagesByUserId = function (Id, callback) {
   //Msg.find({touser_id: Id},[],{sort: [['senddate', 'desc']], limit: 20},callback);
-  Msg.find({touser_id: Id},null, {skip:0,sort:[['senddate','desc']],limit: 20},callback);
+  Msg.find({touser_id: Id},null,{skip:0,sort:[['senddate','desc']],limit: 20},callback);
 };
 

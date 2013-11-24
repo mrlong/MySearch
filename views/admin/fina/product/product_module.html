@@ -1,0 +1,37 @@
+<%- include ../../header-nav.html %>
+<script type="text/javascript">
+  
+</script>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">产品编号：<%=product.code%> 产品名称：<%=product.name%></div>
+  <div class="panel-body">
+    <p>模块编号唯一，在修改时要注意。</p>
+  </div>
+
+  <table class="table table-hover">
+  <thead>
+    <tr>
+    <th>编号</th>
+    <th>名称</th>
+    <th>排号</th>
+    <th>禁用</th>
+    <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+  <% for(var i=0;i<product.modules.length;i++){%>
+    <tr>
+    <td><%=product.modules[i].code%></td>
+    <td><%=product.modules[i].name%></td>
+    <td></td>
+    <td></td>
+    <td><a href="#">修改</a></td>
+    </tr>
+  <%}%>
+  </tbody>
+  </table>
+</div>
+<%- include ../../footer-nav.html %>

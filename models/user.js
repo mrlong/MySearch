@@ -34,8 +34,6 @@ var userSchema=new Schema({
     majorother:{type:String},               //如选择了其他，则显示录入信息。
     company:{type:String}                   //工作单位
   }
-
-
 });
 
 db.model('user',userSchema); //user 是 mongodb内的control名

@@ -1,21 +1,22 @@
 // 
-// 后台管理的主页
+// 财务的主页
+// 
 // 
 
 module.exports = function(app){
   this.route=[
-    { url:'/admin/home',
+    { url:'/admin/fina/home',
       auth:true,
       get:gethome
     },
     {
-      url:'/admin',
+      url:'/admin/fina',
       auth:true,
       get:gethome
     }
   ];
 
   function gethome(req,res,next){
-    res.render('admin/home',{url:'/admin'});
+    res.render('admin/fina/home',{url:'/admin/fina'});
   }
 };
