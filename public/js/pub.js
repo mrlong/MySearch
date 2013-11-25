@@ -25,13 +25,22 @@
   // save 为保存按钮。
   // $("#save").msgbox(data.msg);
   // $("#save").msgbox(data.msg,false);
-  $.fn.msgbox=function(msg,success){
+  // $("#save").msgbox(data.msg,false,functin(){});
+  // $("#save").msgbox(data.msg,function(){});
+  $.fn.msgbox=function(msg,success,callabck){
     var jpanel = $(this).parents('.panel');
 
     //没有则直接提示窗口了。
-    if(!jpanel){
-      alert(msg);
-      return false;
+    //查是不是有弹出窗口的编辑窗口
+    if(jpanel.length==0){
+      var jmodal_dialog = $(this).parents('.modal-dialog');
+      if (jmodal_dialog.length>0){
+        var jpanel = jmodal_dialog.find('.modal-body');
+      };
+      if(jpanel.length==0){
+        alert(msg);
+        return false;
+      };
     };
 
     jpanel.find("#yunzjmsgbox").remove();
@@ -40,7 +49,10 @@
       '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
       '<span class="glyphicon"></span></div>');
     
-    if (success==undefined || success==true){
+    var mysuccess = (success==undefined) || (typeof(success)=='function') || success==true;
+    var func = typeof(success)=='function'?success:callabck;
+
+    if (mysuccess==true){
       jtxt.addClass('alert-success');
       jtxt.find('span').addClass('glyphicon-ok');
       jtxt.find('span').after(' '+msg);
@@ -58,6 +70,7 @@
     setTimeout(function(){
       $("#yunzjmsgbox").remove();
       jpanel.removeClass('panel-danger').removeClass('panel-success').addClass('panel-default');
+      if(func){func()};
     },2000);
   };  
  

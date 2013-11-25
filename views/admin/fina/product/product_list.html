@@ -2,6 +2,7 @@
 <script type="text/javascript">
   $(function(){
     $("#updatefrm").validation();
+    $("#addfrm").validation();
 
     $(".updatebotton").on('click',function(){
       var code = $(this).attr('code');
@@ -10,27 +11,60 @@
         if ('<%=products[i].code%>'==code){
           $("#name").val('<%=products[i].name%>');
           $("#sort").val('<%=products[i].sort%>');
-          <%if(products[i].stop==true){%>
-            $("#stop").attr('checked','true');
-          <%}else{%>
-            $("#stop").removeAttr("checked");
-          <%}%>  
+          $("#stop").prop('checked',<%=products[i].stop%>);
         }
       <%}%>
       $("#myModal").modal('show');
     });
     
     $("#saveupdate").on('click',function(){
+      if ($("#updatefrm").valid()==false){
+        $(this).msgbox("填写信息不完整。",false);
+        return false;
+      };
+
+      var code = $('#myModal').attr('code');
+      var name = $('#name').val();
+      var sort = $('#sort').val();
+      var stop = $('#stop').prop('checked'); 
+      //上传
+      $.post('/admin/fina/product/edit',
+        {code:code,name:name,sort:sort,stop:stop},function(data,textStatus){
+          if(textStatus=='success' && data.success==true){
+            $('.panel-body').msgbox(data.msg,function(){
+              document.location.reload();
+            });
+          }
+          else{
+            $('.panel-body').msgbox(data?data.msg:'提交到服务器出现异常出错。',false);
+          }
+        });
       $('#myModal').modal('hide');
     });
+
+    //增加保存
+    $("#saveadd").on('click',function(){
+      if ($("#addfrm").valid()==false){
+        $(this).msgbox("填写信息不完整。",false);
+        return false;
+      };
+
+      var code = $('#code').val();
+      var name = $('#name').val();
+      var sort = $('#sort').val();
+      var stop = $('#stop').prop('checked');
+
+    });
+
   });
 </script>
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Panel heading</div>
+  <div class="panel-heading">产品列表</div>
   <div class="panel-body">
-    <p>...</p>
+    <p>产品的编号是唯一。</p>
+    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addModal"><span class="glyphicon glyphicon-plus"></span>增加产品</button>
   </div>
 
   <table class="table table-hover">
@@ -90,8 +124,55 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" id="saveupdate">保存修改</button>
+        <button type="button" class="btn btn-default col-sm-offset-6 col-md-2" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary col-md-3" id="saveupdate">保存修改</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- Modal 修改 -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">增加产品</h4>
+      </div>
+      <div class="modal-body">
+        <form id="addfrm" class="form-horizontal">
+          <div class="form-group">
+            <label for="pw1" class="col-sm-3 control-label">编号</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="code" check-type="required">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pw1" class="col-sm-3 control-label">名称</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="name"  check-type="required">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pw1" class="col-sm-3 control-label">排号</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="sort" check-type="required number">
+            </div>
+          </div>
+          
+          <div class="checkbox">
+            <label class="col-sm-offset-3 col-sm-6">
+              <input type="checkbox"  id="stop" >禁用
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default col-sm-offset-6 col-md-2" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary col-md-3  " id="saveadd">保存</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

@@ -3,6 +3,7 @@
 
 var
 Product = require('../../../models/product'),
+Obj  = require('../../../services/obj'),
 Util = require('../../../services/util')
 ;
 
@@ -37,6 +38,55 @@ module.exports = function(app){
         });
       }
     },
+    //修改
+    {
+      url:'/admin/fina/product/edit',
+      auth:true,
+      post:function(req,res,next){
+        var data = new Obj({
+          code : req.param('code')||'',
+          name : req.param('name')||'',
+          sort : parseInt(req.param('sort')||'0'),
+          stop : req.param('stop')||'false'
+        }).trim().xss();
+      
+        Product.getProductByCode(data.code,function(err,doc){
+          if(!err && doc){
+            doc.name = data.name;
+            doc.sort = data.sort;
+            doc.stop = data.stop.toLowerCase()=='true';
+            doc.save(function(err){
+              if(!err){
+                res.json(200,{success:true,msg:'产品修改成功。'});
+              }
+              else{
+                res.json(200,{success:false,msg:'产品修改保存到库出现异常。'});
+              }
+            });    
+          }
+          else{
+            res.json(200,{success:false,msg:'产品编号不能，不能修改。'});
+          };
+        });
+      }
+    },
+    //增加产品
+    {
+      url:'/admin/fina/product/add',
+      auth:true,
+      post:function(req,res,next){
+        var data = new Obj({
+          code : req.param('code')||'',
+          name : req.param('name')||'',
+          sort : parseInt(req.param('sort')||'0'),
+          stop : req.param('stop')||'false'
+        }).trim().xss();
+
+      },
+
+    },
     //
+
+
   ]
 };
