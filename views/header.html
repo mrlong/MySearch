@@ -55,7 +55,11 @@
         </ul>
 
         <%if(locals.user){%>
-          <p class="navbar-text pull-right"><img id="navimg" style="width: 20px;height:20px;" src="/vip/getusericon" class="img-rounded"> <%=locals.user.name%>! <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span></p>
+          <p class="navbar-text pull-right">
+            <img id="navimg" style="width:  20px;height:20px;" src="/vip/getusericon" class="img-rounded">
+            <a href="/vip" class="navbar-link"><%=locals.user.name%></a>! 
+            <span class="label label-warning"><a href="/logout" class="navbar-link">退出</a></span>
+          </p>
         <%}%>
       </div>
       
