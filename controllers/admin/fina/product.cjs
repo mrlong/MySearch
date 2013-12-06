@@ -82,6 +82,20 @@ module.exports = function(app){
           stop : req.param('stop')||'false'
         }).trim().xss();
 
+        Product.getProductByCode(data.code,function(err,doc){
+          if(!err && doc){
+            res.json(200,{success:false,msg:'产品编号已存。'});
+          };
+        });
+
+        Product.addProduct(data.code,data.name,data.sort,function(err){
+          if(!err){
+            res.json(200,{success:true,msg:'增加产品成功。'});
+          }
+          else{
+            res.json(200,{success:false,msg:'保存出现异常出错。'});
+          };
+        });
       },
 
     },

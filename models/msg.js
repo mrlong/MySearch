@@ -19,9 +19,8 @@ var msgSchema=new Schema({
   senddate    : {type:Date,default:Date.now}  //发送的时间
 });
 
-db.model('msg',msgSchema); //msg 是 mongodb内的control名
+var Msg = db.model('msg',msgSchema); //msg 是 mongodb内的control名
 
-var Msg=db.model('msg');
 
 /**
  * 根据用户ID，获取未读消息的数量

@@ -36,9 +36,8 @@ var userSchema=new Schema({
   }
 });
 
-db.model('user',userSchema); //user 是 mongodb内的control名
+var User = db.model('user',userSchema); //user 是 mongodb内的control名
 
-var User=db.model('user');
 exports.userSave=function(data,callback){
   var newUser=new User();
   newUser.qq = data.qq;

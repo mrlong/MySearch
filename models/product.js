@@ -12,7 +12,7 @@ ObjectId = Schema.Types.ObjectId;
 
 
 var productSchema=new Schema({
-  code :{type:String,index: true},           //编号
+  code :{type:String,index: true,required:true},//编号
   name :{type:String},           //名称
   sort :{type:Number,default:0}, //排序号
   stop :{type:Boolean,default:false}, //是否禁用
@@ -20,8 +20,7 @@ var productSchema=new Schema({
 });
 
 
-db.model('product',productSchema); 
-var Product=db.model('product');
+var Product = db.model('product',productSchema); 
 
 /**
  * 取出所有的产品列表
@@ -56,12 +55,14 @@ exports.getProductByCode = function(code,callback){
  * - err, 数据库错误
  * @param {String} code 产品编号
  * @param {String} name 产品名称
+ * @param {Number} name 产品名称
  * @param {Function} callback 获取消息数量
  */
-exports.addProduct = function(code,name,callback){
+exports.addProduct = function(code,name,sort,callback){
   var newProduct = new Product();
   newProduct.code = code;
   newProduct.name = name;
+  newProduct.sort = sort;
   
   //确定是否存在
   Product.findOne({code:code},function(err,doc){
