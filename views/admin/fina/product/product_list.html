@@ -49,10 +49,24 @@
         return false;
       };
 
-      var code = $('#code').val();
-      var name = $('#name').val();
-      var sort = $('#sort').val();
-      var stop = $('#stop').prop('checked');
+      var code = $('#addcode').val();
+      var name = $('#addname').val();
+      var sort = $('#addsort').val();
+      // var stop = $('#stop').prop('checked');
+      var self = this;
+      
+      $.post('/admin/fina/product/add',{code:code,name:name,sort:sort},
+        function(data,textStatus){
+          if(textStatus=='success' && data.success==true){
+            $('.panel-body').msgbox(data.msg,function(){
+              document.location.reload();
+            });
+            $('#addModal').modal('hide');
+          }
+          else{
+            $(self).msgbox(textStatus!="success"?"保存出现异常错误。":data.msg);
+          }
+        });      
 
     });
 
@@ -80,7 +94,7 @@
   <tbody>
   
   <% for(var i=0;i<products.length;i++){%>
-    <tr>
+    <tr <%if(products[i].stop==true){%>class="stopfont"<%}%>>
     <td><%=products[i].code%></td>
     <td><%=products[i].name%></td>
     <td><%=products[i].sort%></td>
@@ -132,7 +146,7 @@
 </div><!-- /.modal -->
 
 
-<!-- Modal 修改 -->
+<!-- Modal 增加 -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -145,28 +159,22 @@
           <div class="form-group">
             <label for="pw1" class="col-sm-3 control-label">编号</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="code" check-type="required">
+              <input type="text" class="form-control" id="addcode" check-type="required">
             </div>
           </div>
 
           <div class="form-group">
             <label for="pw1" class="col-sm-3 control-label">名称</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="name"  check-type="required">
+              <input type="text" class="form-control" id="addname"  check-type="required">
             </div>
           </div>
 
           <div class="form-group">
             <label for="pw1" class="col-sm-3 control-label">排号</label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="sort" check-type="required number">
+              <input type="text" class="form-control" id="addsort" check-type="required number">
             </div>
-          </div>
-          
-          <div class="checkbox">
-            <label class="col-sm-offset-3 col-sm-6">
-              <input type="checkbox"  id="stop" >禁用
-            </label>
           </div>
         </form>
       </div>

@@ -99,8 +99,48 @@ module.exports = function(app){
       },
 
     },
-    //
 
+    //增加产品的模块
+    {
+      url:'/admin/fina/product/module/add',
+      auth:true,
+      post:function(req,res,next){
 
+      },
+    },
+    //修改产品的模块
+    {
+      url:'/admin/fina/product/module/edit',
+      auth:true,
+      post:function(req,res,next){
+        var data = new Obj({
+          pcode: req.param('pcode')||'',
+          code : req.param('code')||'',
+          name : req.param('name')||'',
+          sort : parseInt(req.param('sort')||'0'),
+          stop : req.param('stop')||'false'
+        }).trim().xss();
+        
+        Product.getProductModuleByCode(data.pcode,data.code,function(err,doc,pro){
+          if(!err && doc){
+            doc.name = data.name;
+            doc.sort = data.sort;
+            doc.stop = data.stop;
+            pro.save(function(err){
+              if(!err){
+                res.json(200,{success:true,msg:'保存成功。'});
+              }
+              else{
+                res.json(200,{success:false,msg:'保存失败，无法获取原因。'});
+              }
+            });
+          }
+          else{
+            res.json(200,{success:false,msg:err.message});
+          }
+        });
+      },
+    },   
+    ////////
   ]
 };

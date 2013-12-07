@@ -1,6 +1,47 @@
 <%- include ../../header-nav.html %>
 <script type="text/javascript">
-  
+  $(function(){
+    $("#updatefrm").validation();
+
+    $(".updatebotton").on('click',function(){
+      var code = $(this).attr('code');
+      $("#myModal").attr('code',code);
+      <%for(var i=0;i<product.modules.length;i++){%>
+        if ('<%=product.modules[i].code%>'==code){
+          $("#name").val('<%=product.modules[i].name%>');
+          $("#sort").val('<%=product.modules[i].sort%>');
+          $("#stop").prop('checked',<%=product.modules[i].stop%>);
+        }
+      <%}%>
+      $("#myModal").modal('show');
+    });
+
+    $("#saveupdate").on('click',function(){
+      if ($("#updatefrm").valid()==false){
+        $(this).msgbox("填写信息不完整。",false);
+        return false;
+      };
+
+      var pcode = '<%=product.code%>';
+      var code = $('#myModal').attr('code');
+      var name = $('#name').val();
+      var sort = $('#sort').val();
+      var stop = $('#stop').prop('checked'); 
+
+      $.post('/admin/fina/product/module/edit',{pcode:pcode,code:code,name:name,sort:sort,stop:stop},function(data,textStatus){
+        if(textStatus=='success' && data.success==true){
+          $('.panel-body').msgbox(data.msg,function(){
+              document.location.reload();
+            });
+        }
+        else{
+           $('.panel-body').msgbox(data?data.msg:'提交到服务器出现异常出错。',false);
+        };
+        $('#myModal').modal('hide');
+      });
+    });
+
+  });
 </script>
 
 <div class="panel panel-default">
@@ -28,10 +69,50 @@
     <td><%=product.modules[i].name%></td>
     <td></td>
     <td></td>
-    <td><a href="#">修改</a></td>
+    <td><a href="#" class="updatebotton" code="<%=product.modules[i].code%>">修改</a></td>
     </tr>
   <%}%>
   </tbody>
   </table>
 </div>
+
+<!-- Modal 修改 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">修改</h4>
+      </div>
+      <div class="modal-body">
+        <form id="updatefrm" class="form-horizontal">
+          <div class="form-group">
+            <label for="pw1" class="col-sm-3 control-label">名称</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="name"  check-type="required">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pw1" class="col-sm-3 control-label">排号</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="sort" check-type="required number">
+            </div>
+          </div>
+          
+          <div class="checkbox">
+            <label class="col-sm-offset-3 col-sm-6">
+              <input type="checkbox"  id="stop" >禁用
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default col-sm-offset-6 col-md-2" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary col-md-3" id="saveupdate">保存修改</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <%- include ../../footer-nav.html %>

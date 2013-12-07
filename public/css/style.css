@@ -54,3 +54,8 @@ form .alert p{
 .panel .panel-footer .alert-info p{
   font-size:12px;
 }
+
+/*设行的禁用color*/
+.stopfont{
+  color:red;
+}

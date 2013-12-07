@@ -85,9 +85,10 @@ exports.addProduct = function(code,name,sort,callback){
  * @param {ObjectID} Pid 产品_Id
  * @param {String} code 产品模块的编号
  * @param {String} name 产品模块的名称
+ * @param {Number} sort 产品模块的排号
  * @param {Function} callback 
  */
-exports.addProductModule = function(Pid,code,name,callback){
+exports.addProductModule = function(Pid,code,name,sort,callback){
   Product.findById(Pid,function(err,doc){
     if(!err && doc){
       for(var i=0;i<doc.modules.length;i++){
@@ -96,7 +97,7 @@ exports.addProductModule = function(Pid,code,name,callback){
           return false;
         }
       };
-      doc.modules[doc.modules.length]={code:code,name:name,stop:false};
+      doc.modules[doc.modules.length]={code:code,name:name,sort:sort,stop:false};
       doc.save(function(err){
         callback(err);
       });
@@ -115,12 +116,13 @@ exports.addProductModule = function(Pid,code,name,callback){
  * @param {ObjectID} Pcode 产品编号
  * @param {String} code 产品模块的编号
  * @param {String} name 产品模块的名称
+ * @param {Number} sort 产品模块的排号
  * @param {Function} callback 
  */
-exports.addProductModule2 = function(Pcode,code,name,callback){
+exports.addProductModule2 = function(Pcode,code,name,sort,callback){
   Product.findOne({code:Pcode},function(err,doc){
     if(!err && doc){
-      addProductModule(doc._id,code,name,callback);
+      addProductModule(doc._id,code,name,sort,callback);
     }
     else{
       callback({success:false,msg:'没有找到产品，不能增加模块'})
@@ -128,5 +130,36 @@ exports.addProductModule2 = function(Pcode,code,name,callback){
   });
 };
 
+/**
+ * 取出产品的模块
+ * Callback:
+ * 回调函数参数列表：
+ * - err, 数据库错误
+ * - doc, 表示取出的模块
+ * - product, 表示取出的产品 
+ * @param {ObjectID} Pcode 产品编号
+ * @param {String} code 产品模块的编号
+ * @param {Function} callback 
+ */
+exports.getProductModuleByCode = function(pcode,code,callback){
+  Product.findOne({code:pcode},function(err,doc){
+    if(!err && doc){
+      var hasfind = false;
+      for (var i=0;i<doc.modules.length;i++){
+        if(doc.modules[i].code==code){
+          callback(null,doc.modules[i],doc);
+          hasfind = true;
+          return true;
+        };
+        if(hasfind==false){
+          callback(new Error('没有找到模块号，不能修改。'));
+        };
+      };
+    }
+    else{
+      callback(err?err:new Error('没有找到产品无法修改产品的模块。'));
+    }
+  });
+};
 
 
