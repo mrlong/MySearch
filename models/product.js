@@ -10,13 +10,19 @@ db=require('./db'),
 Schema=require('mongoose').Schema,
 ObjectId = Schema.Types.ObjectId;
 
+var productmoduleSchema = new Schema({
+  code : {type:String,index:true,required:true},
+  name : {type:String},
+  sort : {type:Number,default:0},
+  stop : {type:Boolean,default:false}
+});
 
-var productSchema=new Schema({
+var productSchema = new Schema({
   code :{type:String,index: true,required:true},//编号
   name :{type:String},           //名称
   sort :{type:Number,default:0}, //排序号
   stop :{type:Boolean,default:false}, //是否禁用
-  modules:{ type: Array }        //模块数组，格式： code : String , name : String,stop:Boolean
+  modules:[productmoduleSchema]        //模块数组，格式： code : String , name : String,stop:Boolean
 });
 
 
@@ -151,9 +157,9 @@ exports.getProductModuleByCode = function(pcode,code,callback){
           hasfind = true;
           return true;
         };
-        if(hasfind==false){
-          callback(new Error('没有找到模块号，不能修改。'));
-        };
+      };
+      if(hasfind==false){
+        callback(new Error('没有找到模块号，不能修改。'));
       };
     }
     else{

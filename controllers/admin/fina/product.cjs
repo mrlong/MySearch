@@ -105,7 +105,31 @@ module.exports = function(app){
       url:'/admin/fina/product/module/add',
       auth:true,
       post:function(req,res,next){
+        var data = new Obj({
+          pcode:req.param('pcode')||'',
+          code :req.param('code')||'',
+          name :req.param('name')||'',
+          sort :parseInt(req.param('sort')||'0')
+        }).trim().xss();
 
+        Product.getProductByCode(data.pcode,function(err,doc){
+          if(!err && doc){
+            for(var i=0;i<doc.modules.length;i++){
+              if(doc.modules[i].code==data.code){
+                res.json(200,{success:false,msg:'你增加的模块编号已存在。'});
+                return false;
+              };
+            };
+            //doc.modules.push({code:data.code,name:data.name,sort:data.sort,stop:false});
+            doc.modules.push(data);
+            doc.save(function(err){
+              res.json(200,{success:!err,msg:err?'保存到库内出错':'增加模块保成功能。'});
+            });
+          }
+          else{
+            res.json(200,{success:false,msg:'没有找到产品不能增加模块。'});  
+          }
+        });
       },
     },
     //修改产品的模块

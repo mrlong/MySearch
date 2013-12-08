@@ -73,6 +73,11 @@
   });
 </script>
 
+<ol class="breadcrumb">
+  <li><a href="/admin/fina">财务</a></li>
+  <li class="active">产品</li>
+</ol>
+
 <div class="panel panel-default">
   <!-- Default panel contents -->
   <div class="panel-heading">产品列表</div>
@@ -99,7 +104,7 @@
     <td><%=products[i].name%></td>
     <td><%=products[i].sort%></td>
     <td><%=products[i].stop%></td>
-    <td><a href="#" class="updatebotton" code="<%=products[i].code%>">修改</a>|<a href="/admin/fina/product/<%=products[i].code%>">模块</a></td>
+    <td><a href="#" class="updatebotton" code="<%=products[i].code%>">修改</a> <a href="/admin/fina/product/<%=products[i].code%>">模块<span class="badge"><%=products[i].modules.length%></span></a></td>
     </tr>
   <%}%>
   </tbody>
