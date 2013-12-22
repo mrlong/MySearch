@@ -13,11 +13,15 @@ ObjectId = Schema.Types.ObjectId;
 var msgSchema=new Schema({
   senduser_id : {type:ObjectId,index: true},      //谁发的信息
   touser_id   : {type:ObjectId},                  //发给谁的
-  isreaded    : {type:Boolean,default:false}, //=true 表示已读了。
-  content     : {type:String},                //发送的内容
-  source      : {type:Number,default:0},      //=0系统信息，1＝小组信息，2＝个人信息
-  senddate    : {type:Date,default:Date.now}  //发送的时间
+  isreaded    : {type:Boolean,default:false},     //=true 表示已读了。
+  content     : {type:String},                    //发送的内容
+  source      : {type:Number,default:0},          //=0系统信息，1＝小组信息，2＝个人信息
+  senddate    : {type:Date,default:Date.now},     //发送的时间
+  group       : {type:ObjectId}                   //相同表示同一组
 });
+
+// var NativeObjectId = require('mongodb').ObjectID
+// var nativeOid = new NativeObjectId()
 
 var Msg = db.model('msg',msgSchema); //msg 是 mongodb内的control名
 

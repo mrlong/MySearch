@@ -5,11 +5,14 @@
 
 module.exports = function(app){
   this.route=[
-    { url:'/admin/fina/home',
+    { 
+      name:'财务－主页',
+      url:'/admin/fina/home',
       auth:true,
       get:gethome
     },
     {
+      name:'财务－主页',
       url:'/admin/fina',
       auth:true,
       get:gethome

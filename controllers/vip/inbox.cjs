@@ -10,6 +10,7 @@ Msg = require('../../models/msg');
 module.exports = function(app){
   this.route=[
     {
+      name:'用户中心－站内信息',
       url:'/vip/inbox',
       auth:true, 
       get:getmessage,

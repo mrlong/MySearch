@@ -9,7 +9,9 @@ Util = require('../../../services/util')
 
 module.exports = function(app){
   this.route=[
-    { url:'/admin/fina/product',
+    { 
+      name:'财务－产品列表',
+      url:'/admin/fina/product',
       auth:true,
       get:function(req,res,next){
         Product.getProductList(function(err,docs){
@@ -24,6 +26,7 @@ module.exports = function(app){
     },
     //取出产品的模块
     {
+      name:'财务-取出产品的模块',
       url:'/admin/fina/product/:code',
       auth:true,
       get:function(req,res,next){
@@ -40,6 +43,7 @@ module.exports = function(app){
     },
     //修改
     {
+      name:'财务-修改产品模块',
       url:'/admin/fina/product/edit',
       auth:true,
       post:function(req,res,next){
@@ -72,6 +76,7 @@ module.exports = function(app){
     },
     //增加产品
     {
+      name:'财务-增加产品',
       url:'/admin/fina/product/add',
       auth:true,
       post:function(req,res,next){
@@ -102,6 +107,7 @@ module.exports = function(app){
 
     //增加产品的模块
     {
+      name:'财务－增加产品的模块',
       url:'/admin/fina/product/module/add',
       auth:true,
       post:function(req,res,next){
@@ -134,6 +140,7 @@ module.exports = function(app){
     },
     //修改产品的模块
     {
+      name:'财务－修改产品的模块',
       url:'/admin/fina/product/module/edit',
       auth:true,
       post:function(req,res,next){

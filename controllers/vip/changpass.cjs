@@ -16,6 +16,7 @@ Filedb=require('../../services/filedb');
 module.exports = function(app){
   this.route=[
     {
+      name:'用户中心－修改密码',
       url:'/vip/chagpass',
       auth:true, 
       get:function(req,res,next){

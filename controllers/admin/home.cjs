@@ -4,11 +4,14 @@
 
 module.exports = function(app){
   this.route=[
-    { url:'/admin/home',
+    { 
+      name:'后台管理－主页',
+      url:'/admin/home',
       auth:true,
       get:gethome
     },
     {
+      name:'后台管理－主页',
       url:'/admin',
       auth:true,
       get:gethome

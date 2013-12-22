@@ -12,6 +12,7 @@ Obj  = require('../../services/obj');
 module.exports = function(app){
   this.route=[
     {
+      name:'用户中心－基本信息',
       url:'/vip/profile',
       auth:true, 
       get:function(req,res,next){

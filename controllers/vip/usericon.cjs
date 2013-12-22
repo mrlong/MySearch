@@ -32,6 +32,7 @@ module.exports = function(app){
       post:uploadusericon
     },
     {
+      name:'用户中心－保存头像',
       url:'/vip/save_usericon',    //全图保存为头象
       auth:true,
       post:save_usericon
@@ -42,6 +43,7 @@ module.exports = function(app){
       get:getusericon
     },
     {
+      name:'用户中心－保存头像',
       url:'/vip/save_usericonregion', //保存选择的区域
       auth:true,
       post:save_usericonregion

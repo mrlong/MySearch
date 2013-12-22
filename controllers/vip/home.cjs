@@ -15,11 +15,15 @@ Filedb=require('../../services/filedb');
 //用户登录
 module.exports = function(app){
 	this.route=[
-		{ url:'/vip/home',
+		{ 
+			name:'用户中心－主页',
+			url:'/vip/home',
 			auth:true,
 			get:home
 		},
-		{ url:'/vip',
+		{ 
+			name:'用户中心－主页',
+			url:'/vip',
 			auth:true,
 			get:home
 		}		
