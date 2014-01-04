@@ -17,7 +17,9 @@
     "validator": "=1.5.1",
     "crypto":"0.0.3",
     "gm": "*",
-    "assert":"*"     
+    "assert":"*",
+    "request": "*" ,
+    "async":"*"    
   }
 }
 
