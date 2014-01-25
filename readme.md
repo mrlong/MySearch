@@ -68,7 +68,14 @@ browes -> routes -> controllers -> view  + models = html
    models
    Views
    controllers
+
+
+5.系统调式方法：
+   安装node-inspector , 在安装时必须用root权限安装。 sudo npm install -g node-inspector 
+   node --debug app.js  启动调试模式的应用。
+   node-inspector  默认是8080端口，如占用请使用 --web-port=8081 的方式。 启动好后会提示你的URL .
    
+
 
 
                                     
