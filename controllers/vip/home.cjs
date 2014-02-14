@@ -9,7 +9,8 @@ Util = require('../../services/util'),
 Msg  = require('../../models/msg'),
 settings = require('../../settings'),
 Obj  = require('../../services/obj'),
-Filedb=require('../../services/filedb');
+Filedb = require('../../services/filedb');
+var Fag = require('../../models/Fag'); 
 
 
 //用户登录

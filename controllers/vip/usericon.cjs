@@ -143,7 +143,9 @@ module.exports = function(app){
       Filedb.readfile(user.icon,function(err,data){
         if (err){
           fs.readFile(settings.publicdir+'/img/no_head.png',function(err,data){
-            if(err) throw err;
+            if(err){
+              return next(err);
+            }; //throw err;
             //返回默认的图片
             res.set({
              'Content-Type': 'imge/png',

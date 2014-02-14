@@ -74,3 +74,11 @@ routes(app);
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+process.on('exit', function(code) {
+  // do *NOT* do this
+  setTimeout(function() {
+    console.log('This will not run');
+  }, 0);
+  console.log('About to exit with code:', code);
+});
