@@ -10,7 +10,7 @@ Msg  = require('../../models/msg'),
 settings = require('../../settings'),
 Obj  = require('../../services/obj'),
 Filedb = require('../../services/filedb');
-var Fag = require('../../models/Fag'); 
+var Fag = require('../../models/fag'); 
 
 
 //用户登录
